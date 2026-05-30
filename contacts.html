@@ -9,227 +9,279 @@
   <style>
     :root {
       --purple: #8c3bff;
-      --purple-dark: #4a1b75;
+      --accent: #ff00ff;
       --light: #f6f2fb;
       --text-dark: #1d1630;
       --muted: #b9aacd;
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #0d0b12;
-      color: #fff;
-    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background: #0d0b12; color: #fff; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
-    .container {
-      width: 1200px;
-      max-width: calc(100% - 80px);
-      margin: 0 auto;
-    }
-    .hero {
-      position: relative;
-      background: url('ChatGPT Image 30 mai 2026, 09_07_07.png') center/cover no-repeat;
-      min-height: 520px;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(10,8,17,0.95) 0%, rgba(10,8,17,0.75) 50%, rgba(10,8,17,0.35) 100%);
-      z-index: 0;
-    }
-    .logo img {
-      height: 48px;
-      width: auto;
-    }
-    .footer-logo img {
-      height: 60px;
-      width: auto;
-      margin-bottom: 12px;
-    }
+    ul { list-style: none; }
+
+    .container { width: 1200px; max-width: calc(100% - 80px); margin: 0 auto; }
+
+    /* ===== NAVBAR ===== */
     header {
-      position: relative;
-      z-index: 10;
-      padding: 15px 0;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(13, 11, 18, 0.97);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      padding: 16px 0;
     }
+
     .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 16px;
     }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+
+    .logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
     .logo-box {
-      width: 64px;
-      height: 44px;
-      border: 2px solid #e7d7ff;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 4px;
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
+      background: rgba(255,255,255,0.05);
     }
-    .logo-box::before,
-    .logo-box::after {
-      content: '';
-      position: absolute;
-      height: 2px;
-      width: 16px;
-      background: #e7d7ff;
-      top: 8px;
-      left: 6px;
-    }
-    .logo-box::after {
-      top: auto;
-      bottom: 8px;
-      right: 6px;
-      left: auto;
-    }
-    .logo-text {
-      font-family: 'Dancing Script', cursive;
-      font-size: 26px;
-      color: #f3e9ff;
-    }
+    .logo-box img { height: 40px; width: auto; display: block; object-fit: contain; }
+
     .nav-links {
       display: flex;
-      gap: 30px;
-      font-size: 14px;
+      gap: 26px;
+      font-size: 13px;
       color: #d9cce8;
     }
-    .nav-links a {
-      position: relative;
-      padding-bottom: 6px;
+    .nav-links a { transition: color 0.3s; }
+    .nav-links a:hover { color: var(--purple); }
+    .nav-links a.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 4px;
     }
-    .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--purple);
-      border-radius: 2px;
-    }
+
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+
     .follow-btn {
-      border: 1px solid #a971ff;
-      padding: 10px 20px;
+      border: 1px solid var(--purple);
+      padding: 8px 16px;
       border-radius: 999px;
       background: transparent;
       color: #fff;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       font-size: 13px;
       cursor: pointer;
+      transition: background 0.3s;
+      white-space: nowrap;
     }
-    .hero-content {
+    .follow-btn:hover { background: var(--purple); }
+
+    /* ===== HAMBURGER ===== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px; height: 40px;
+      cursor: pointer;
+      z-index: 1200;
       position: relative;
-      z-index: 1;
-      padding: 30px 0 70px;
+      border: 1px solid rgba(155,77,255,0.3);
+      border-radius: 8px;
+      padding: 8px;
+      background: transparent;
+      transition: border-color 0.3s;
     }
+    .hamburger:hover { border-color: var(--purple); }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: #ffffff;
+      border-radius: 2px;
+      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ===== MOBILE MENU ===== */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #0d0b12;
+      z-index: 1100;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+    .mobile-menu::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(140,59,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .mobile-menu::after {
+      content: '';
+      position: absolute;
+      bottom: -200px; left: -200px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,0,255,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .mobile-close {
+      position: absolute; top: 24px; right: 24px;
+      width: 44px; height: 44px;
+      background: rgba(140,59,255,0.1);
+      border: 1px solid rgba(140,59,255,0.3);
+      border-radius: 50%;
+      display: flex; justify-content: center; align-items: center;
+      cursor: pointer; z-index: 10; padding: 0;
+      transition: background 0.3s;
+    }
+    .mobile-close:hover { background: rgba(140,59,255,0.25); }
+    .mobile-close span {
+      display: block; width: 20px; height: 2px;
+      background: #ffffff; border-radius: 2px; position: absolute;
+    }
+    .mobile-close span:nth-child(1) { transform: rotate(45deg); }
+    .mobile-close span:nth-child(2) { transform: rotate(-45deg); }
+
+    .mobile-nav-links {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 4px;
+      width: 100%; padding: 0 30px;
+      position: relative; z-index: 1;
+    }
+    .mobile-nav-links li {
+      width: 100%; text-align: center;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .mobile-menu.open .mobile-nav-links li { opacity: 1; transform: translateY(0); }
+    .mobile-menu.open .mobile-nav-links li:nth-child(1) { transition-delay: 0.10s; }
+    .mobile-menu.open .mobile-nav-links li:nth-child(2) { transition-delay: 0.17s; }
+    .mobile-menu.open .mobile-nav-links li:nth-child(3) { transition-delay: 0.24s; }
+    .mobile-menu.open .mobile-nav-links li:nth-child(4) { transition-delay: 0.31s; }
+    .mobile-menu.open .mobile-nav-links li:nth-child(5) { transition-delay: 0.38s; }
+    .mobile-menu.open .mobile-nav-links li:nth-child(6) { transition-delay: 0.45s; }
+    .mobile-nav-links li a {
+      display: block; font-size: 26px; font-weight: 600;
+      color: #ffffff; padding: 12px 0; letter-spacing: 0.5px;
+      transition: color 0.3s;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .mobile-nav-links li:last-child a { border-bottom: none; }
+    .mobile-nav-links li a:hover, .mobile-nav-links li a.active { color: var(--accent); }
+
+    .mobile-follow {
+      margin-top: 36px; opacity: 0; transform: translateY(20px);
+      transition: opacity 0.4s ease 0.55s, transform 0.4s ease 0.55s;
+      position: relative; z-index: 1;
+    }
+    .mobile-menu.open .mobile-follow { opacity: 1; transform: translateY(0); }
+    .mobile-follow a {
+      display: flex; align-items: center; gap: 10px;
+      background: linear-gradient(90deg, #9b4dff, #ff00ff);
+      padding: 13px 38px; border-radius: 30px;
+      font-size: 15px; font-weight: 600; color: white;
+    }
+
+    .mobile-social {
+      display: flex; gap: 24px; margin-top: 28px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.4s ease 0.62s, transform 0.4s ease 0.62s;
+      position: relative; z-index: 1;
+    }
+    .mobile-menu.open .mobile-social { opacity: 1; transform: translateY(0); }
+    .mobile-social a { color: #a0a0a0; font-size: 20px; transition: color 0.3s; }
+    .mobile-social a:hover { color: var(--accent); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      background: url('ChatGPT Image 30 mai 2026, 09_07_07.png') center/cover no-repeat;
+      min-height: 520px;
+      overflow: hidden;
+      padding-top: 76px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(10,8,17,0.95) 0%, rgba(10,8,17,0.75) 50%, rgba(10,8,17,0.35) 100%);
+      z-index: 0;
+    }
+
+    .hero-content { position: relative; z-index: 1; padding: 50px 0 70px; }
+
     .hero-grid {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 30px;
       align-items: center;
     }
+
     .hero-label {
-      color: #b48eff;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
+      color: #b48eff; font-size: 12px;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
     }
-    .hero-title {
-      font-size: 44px;
-      line-height: 1.1;
-      margin: 0 0 18px;
-    }
+    .hero-title { font-size: 44px; line-height: 1.1; margin: 0 0 18px; }
     .hero-title span { color: #b067ff; }
     .hero-desc {
-      color: #c8b7dc;
-      font-size: 15px;
-      max-width: 460px;
-      line-height: 1.7;
-      margin-bottom: 30px;
+      color: #c8b7dc; font-size: 15px;
+      max-width: 460px; line-height: 1.7; margin-bottom: 30px;
     }
-    .hero-info {
-      display: flex;
-      gap: 28px;
-      flex-wrap: wrap;
-    }
-    .info-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      color: #e6ddf5;
-    }
+
+    .hero-info { display: flex; gap: 28px; flex-wrap: wrap; }
+    .info-item { display: flex; align-items: center; gap: 12px; font-size: 13px; color: #e6ddf5; }
     .info-icon {
-      width: 36px;
-      height: 36px;
-      background: rgba(141, 73, 255, 0.25);
+      width: 36px; height: 36px;
+      background: rgba(141,73,255,0.25);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #cda7ff;
+      display: flex; align-items: center; justify-content: center;
+      color: #cda7ff; flex-shrink: 0;
     }
-    .contact-section {
-      background: var(--light);
-      padding: 70px 0;
-      color: var(--text-dark);
-    }
+
+    /* ===== CONTACT SECTION ===== */
+    .contact-section { background: var(--light); padding: 70px 0; color: var(--text-dark); }
+
     .contact-grid {
       display: grid;
       grid-template-columns: 1.2fr 0.9fr;
       gap: 40px;
     }
+
     .section-label {
-      color: #b38bff;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      color: #b38bff; font-size: 12px;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
     }
-    .section-title {
-      font-size: 32px;
-      margin: 0 0 12px;
-      color: #1f1636;
-    }
+    .section-title { font-size: 32px; margin: 0 0 12px; color: #1f1636; }
     .section-title span { color: var(--purple); }
-    .section-desc {
-      color: #6f6385;
-      font-size: 14px;
-      margin-bottom: 28px;
-    }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-    .input-group {
-      position: relative;
-    }
-    .input-group i {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #b8a3d8;
-      font-size: 14px;
-    }
-    .input-group textarea + i {
-      top: 18px;
-      transform: none;
-    }
+    .section-desc { color: #6f6385; font-size: 14px; margin-bottom: 28px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+    .input-group { position: relative; }
+    .input-group i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #b8a3d8; font-size: 14px; }
+    .input-group textarea ~ i { top: 18px; transform: none; }
+
     input, textarea {
       width: 100%;
       padding: 12px 14px 12px 40px;
@@ -240,188 +292,192 @@
       font-size: 14px;
       color: #45365c;
       outline: none;
+      transition: border-color 0.3s;
     }
-    textarea {
-      min-height: 120px;
-      resize: none;
-      padding-top: 14px;
-    }
+    input:focus, textarea:focus { border-color: var(--purple); }
+    textarea { min-height: 120px; resize: none; padding-top: 14px; }
+
     .submit-btn {
-      margin-top: 18px;
-      padding: 12px 26px;
-      border-radius: 10px;
-      border: none;
+      margin-top: 18px; padding: 12px 26px;
+      border-radius: 10px; border: none;
       background: linear-gradient(90deg, #7b2eff, #c047ff);
-      color: #fff;
-      font-weight: 500;
-      font-size: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      color: #fff; font-weight: 500; font-size: 14px;
+      display: inline-flex; align-items: center; gap: 10px;
       cursor: pointer;
       box-shadow: 0 12px 24px rgba(141,73,255,0.25);
+      transition: opacity 0.3s;
+      font-family: 'Poppins', sans-serif;
     }
-    .contact-info {
-      padding: 10px 10px;
-    }
+    .submit-btn:hover { opacity: 0.85; }
+
+    .contact-info { padding: 10px; }
     .info-card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 24px 24px;
-      box-shadow: 0 20px 40px rgba(30, 20, 60, 0.08);
+      background: #fff; border-radius: 18px; padding: 24px;
+      box-shadow: 0 20px 40px rgba(30,20,60,0.08);
     }
-    .info-list {
-      display: grid;
-      gap: 18px;
-      margin: 20px 0 30px;
-    }
-    .info-line {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-    .info-line .info-icon {
-      width: 40px;
-      height: 40px;
-      background: #f2e9ff;
-      color: var(--purple);
-    }
-    .info-line h4 {
-      margin: 0 0 4px;
-      font-size: 14px;
-      color: #261a41;
-    }
-    .info-line p {
-      margin: 0;
-      color: #6e5f87;
-      font-size: 13px;
-      line-height: 1.5;
-    }
+
+    .info-list { display: grid; gap: 18px; margin: 20px 0 30px; }
+    .info-line { display: flex; gap: 14px; align-items: flex-start; }
+    .info-line .info-icon { width: 40px; height: 40px; background: #f2e9ff; color: var(--purple); }
+    .info-line h4 { margin: 0 0 4px; font-size: 14px; color: #261a41; }
+    .info-line p { margin: 0; color: #6e5f87; font-size: 13px; line-height: 1.5; }
+
     .promo-card {
-      border: 1px solid #efe6ff;
-      border-radius: 14px;
-      padding: 18px;
-      display: flex;
-      gap: 16px;
-      align-items: center;
+      border: 1px solid #efe6ff; border-radius: 14px;
+      padding: 18px; display: flex; gap: 16px; align-items: center;
       background: #faf7ff;
     }
-    .promo-card img {
-      width: 60px;
-      height: 60px;
-      border-radius: 12px;
-      object-fit: cover;
-      background: #f3e7ff;
-    }
-    .promo-card h5 {
-      margin: 0 0 6px;
-      font-size: 14px;
-      color: #261a41;
-    }
-    .promo-card p {
-      margin: 0;
-      font-size: 12px;
-      color: #6c5e85;
-    }
-    .map-section {
-      height: 240px;
-      background: url('https://replicate.delivery/xezq/lPeSDuO35Iw1BqWD0fsff4qXVlv7lRcnyYQ74kIBYNRETSoaB/out.png') center/cover no-repeat;
-      position: relative;
-    }
-    .map-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(15,10,26,0.65) 0%, rgba(15,10,26,0.2) 45%, rgba(15,10,26,0.8) 100%);
-    }
-    footer {
-      background: #0e0b14;
-      padding: 60px 0 30px;
-      color: #d8c8eb;
-    }
+    .promo-card img { width: 60px; height: 60px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+    .promo-card h5 { margin: 0 0 6px; font-size: 14px; color: #261a41; }
+    .promo-card p { margin: 0; font-size: 12px; color: #6c5e85; }
+
+    /* ===== FOOTER ===== */
+    footer { background: #0e0b14; padding: 60px 0 30px; color: #d8c8eb; }
+
     .footer-grid {
       display: grid;
       grid-template-columns: 1.2fr 1fr 1fr 1fr;
-      gap: 30px;
-      align-items: flex-start;
+      gap: 30px; align-items: flex-start;
+      margin-bottom: 40px;
     }
-    .footer-desc {
-      font-size: 13px;
-      margin: 16px 0 18px;
-      color: #a99aba;
+
+    .footer-logo-box {
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 4px; border-radius: 6px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.05);
+      margin-bottom: 14px;
     }
-    .socials {
-      display: flex;
-      gap: 14px;
-    }
+    .footer-logo-box img { height: 40px; width: auto; display: block; object-fit: contain; }
+
+    .footer-desc { font-size: 13px; margin: 0 0 18px; color: #a99aba; max-width: 240px; line-height: 1.7; }
+    .socials { display: flex; gap: 14px; }
     .socials a {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
+      width: 32px; height: 32px; border-radius: 50%;
       background: rgba(255,255,255,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; transition: background 0.3s, color 0.3s;
     }
-    .footer-title {
-      font-size: 14px;
-      color: #b38bff;
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-    .footer-list {
-      display: grid;
-      gap: 8px;
-      font-size: 13px;
-      color: #b1a1c5;
-    }
-    .footer-contact {
-      display: grid;
-      gap: 10px;
-      font-size: 13px;
-      color: #b1a1c5;
-    }
-    .footer-contact i {
-      margin-right: 8px;
-      color: #b38bff;
-    }
-    .copyright {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 12px;
-      color: #8a7a9f;
-    }
-    @media (max-width: 980px) {
+    .socials a:hover { background: var(--purple); color: white; }
+
+    .footer-title { font-size: 14px; color: #b38bff; margin-bottom: 16px; font-weight: 600; }
+    .footer-list { display: grid; gap: 8px; font-size: 13px; color: #b1a1c5; }
+    .footer-list a { transition: color 0.3s; }
+    .footer-list a:hover { color: var(--purple); }
+
+    .footer-contact-list { display: grid; gap: 10px; font-size: 13px; color: #b1a1c5; }
+    .footer-contact-list span { display: flex; align-items: center; gap: 8px; }
+    .footer-contact-list i { color: #b38bff; }
+
+    .copyright { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 12px; color: #8a7a9f; }
+
+    /* ===================================================== */
+    /*  RESPONSIVE — TABLET (≤900px)                        */
+    /* ===================================================== */
+    @media (max-width: 900px) {
       .container { max-width: calc(100% - 40px); }
-      .hero-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .hero { min-height: 620px; }
+      .nav-links, .follow-btn { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+
+      .hero { min-height: auto; }
+      .hero-content { padding: 40px 0 60px; }
+      .hero-grid { grid-template-columns: 1fr; }
       .hero-title { font-size: 36px; }
-      .form-row { grid-template-columns: 1fr; }
+      .hero-info { gap: 18px; }
+
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-info { padding: 0; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+      .footer-grid > div:first-child { grid-column: 1 / -1; }
+    }
+
+    /* ===================================================== */
+    /*  RESPONSIVE — MOBILE (≤600px)                        */
+    /* ===================================================== */
+    @media (max-width: 600px) {
+      .hero-title { font-size: 28px; }
+      .hero-desc { font-size: 14px; }
+      .hero-info { flex-direction: column; gap: 14px; }
+      .info-item { font-size: 12px; }
+
+      .contact-section { padding: 50px 0; }
+      .section-title { font-size: 24px; }
+      .form-row { grid-template-columns: 1fr; gap: 12px; }
+      .form-row .input-group[style*="1 / -1"] { grid-column: 1 !important; }
+      .submit-btn { width: 100%; justify-content: center; }
+
+      .promo-card { flex-direction: column; text-align: center; }
+      .promo-card img { margin: 0 auto; }
+
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-grid > div:first-child { grid-column: 1; }
+      footer { padding: 50px 0 25px; }
+
+      .mobile-nav-links li a { font-size: 22px; }
     }
   </style>
 </head>
 <body>
-  <section class="hero">
-    <header>
-      <div class="container nav">
-        <div class="logo">
-          <img src="LOGO.png" alt="RL Logo">
-        </div>
-        <nav class="nav-links">
-          <a href="index.html">Accueil</a>
-          <a href="#">Articles</a>
-          <a href="#">Publications</a>
-          <a href="#">Événements</a>
-          <a href="#">À propos</a>
-          <a class="active" href="#">Contact</a>
-        </nav>
-        <a href="https://www.instagram.com/rl_studiorlk/" target="_blank" class="follow-btn">
-    <i class="fab fa-instagram"></i> Nous suivre
-</a>
-      </div>
-    </header>
 
+  <!-- ==================== NAVBAR ==================== -->
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <div class="logo-box">
+          <img src="LOGO.png" alt="RL Studio Logo">
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="#">Articles</a>
+        <a href="#">Publications</a>
+        <a href="#">Événements</a>
+        <a href="#">À propos</a>
+        <a class="active" href="#">Contact</a>
+      </nav>
+
+      <div class="nav-right">
+        <a href="https://www.instagram.com/rl_studiorlk/" target="_blank" class="follow-btn">
+          <i class="fab fa-instagram"></i> Nous suivre
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE MENU ==================== -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Fermer le menu">
+      <span></span><span></span>
+    </button>
+    <ul class="mobile-nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="#">Articles</a></li>
+      <li><a href="#">Publications</a></li>
+      <li><a href="#">Événements</a></li>
+      <li><a href="#">À propos</a></li>
+      <li><a class="active" href="#">Contact</a></li>
+    </ul>
+    <div class="mobile-follow">
+      <a href="https://www.instagram.com/rl_studiorlk/" target="_blank">
+        <i class="fab fa-instagram"></i> Nous suivre
+      </a>
+    </div>
+    <div class="mobile-social">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
     <div class="hero-content">
       <div class="container hero-grid">
         <div>
@@ -457,12 +513,14 @@
     </div>
   </section>
 
+  <!-- ==================== CONTACT FORM ==================== -->
   <section class="contact-section">
     <div class="container contact-grid">
       <div>
         <div class="section-label">ENVOYEZ-NOUS UN MESSAGE</div>
         <h2 class="section-title">Nous sommes à <span>votre écoute.</span></h2>
         <p class="section-desc">Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.</p>
+
         <div class="form-row">
           <div class="input-group">
             <i class="far fa-user"></i>
@@ -473,20 +531,16 @@
             <input type="email" placeholder="Email" />
           </div>
         </div>
-        <div class="form-row">
-          <div class="input-group" style="grid-column: 1 / -1;">
-            <i class="fas fa-phone"></i>
-            <input type="text" placeholder="Téléphone" />
-          </div>
+        <div class="input-group" style="margin-bottom:16px;">
+          <i class="fas fa-phone"></i>
+          <input type="text" placeholder="Téléphone" />
         </div>
-        <div class="form-row">
-          <div class="input-group" style="grid-column: 1 / -1;">
-            <i class="far fa-bookmark"></i>
-            <input type="text" placeholder="Sujet" />
-          </div>
+        <div class="input-group" style="margin-bottom:16px;">
+          <i class="far fa-bookmark"></i>
+          <input type="text" placeholder="Sujet" />
         </div>
-        <div class="input-group">
-          <i class="far fa-comment"></i>
+        <div class="input-group" style="margin-bottom:0;">
+          <i class="far fa-comment" style="top:18px; transform:none;"></i>
           <textarea placeholder="Votre message"></textarea>
         </div>
         <button class="submit-btn">Envoyer le message <i class="fas fa-paper-plane"></i></button>
@@ -538,51 +592,75 @@
     </div>
   </section>
 
- 
-
+  <!-- ==================== FOOTER ==================== -->
   <footer>
-    <div class="container footer-grid">
-      <div>
-        
-        <p class="footer-desc">RL_StudioRLK - Capturez l'instant,<br> partagez l'émotion.</p>
-        <div class="socials">
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-tiktok"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo-box">
+            <img src="LOGO.png" alt="RL Studio Logo">
+          </div>
+          <p class="footer-desc">RL_StudioRLK - Capturez l'instant, partagez l'émotion.</p>
+          <div class="socials">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-title">Navigation</div>
+          <div class="footer-list">
+            <a href="index.html">Accueil</a>
+            <a href="#">Articles</a>
+            <a href="#">Publications</a>
+            <a href="#">Événements</a>
+            <a href="#">À propos</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-title">Catégories</div>
+          <div class="footer-list">
+            <a href="#">Photographie</a>
+            <a href="#">Produits</a>
+            <a href="#">Événements</a>
+            <a href="#">Tutoriels</a>
+            <a href="#">Actualités</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-title">Contact</div>
+          <div class="footer-contact-list">
+            <span><i class="fas fa-phone"></i>+212 62 44 52 70 1</span>
+            <span><i class="far fa-envelope"></i>rlstudiorkl@gmail.com</span>
+            <span><i class="fas fa-map-marker-alt"></i>Rabat, Maroc</span>
+          </div>
         </div>
       </div>
-      <div>
-        <div class="footer-title">Navigation</div>
-        <div class="footer-list">
-          <span>Accueil</span>
-          <span>Articles</span>
-          <span>Publications</span>
-          <span>Événements</span>
-          <span>À propos</span>
-          <span>Contact</span>
-        </div>
-      </div>
-      <div>
-        <div class="footer-title">Catégories</div>
-        <div class="footer-list">
-          <span>Photographie</span>
-          <span>Produits</span>
-          <span>Événements</span>
-          <span>Tutoriels</span>
-          <span>Actualités</span>
-        </div>
-      </div>
-      <div>
-        <div class="footer-title">Contact</div>
-        <div class="footer-contact">
-          <span><i class="fas fa-phone"></i>+212 62 44 52 70 1</span>
-          <span><i class="far fa-envelope"></i>rlstudiorkl@gmail.com</span>
-          <span><i class="fas fa-map-marker-alt"></i>Rabat, Maroc</span>
-        </div>
-      </div>
+      <div class="copyright">© 2025 RL_StudioRLK. Tous droits réservés.</div>
     </div>
-    <div class="copyright">© 2025 RL_StudioRLK. Tous droits réservés.</div>
   </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+
+    function openMenu() {
+      hamburger.classList.add('open');
+      mobileMenu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', openMenu);
+    mobileClose.addEventListener('click', closeMenu);
+    mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMenu));
+  </script>
 </body>
 </html>
