@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RL StudioRLK - Articles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #8a2be2;
+            --secondary: #1a1a1a;
+            --bg-dark: #000000;
+            --bg-hero: radial-gradient(circle at 70% 50%, #2b1b4a 0%, #000000 100%);
+            --bg-light: #fdfdfd;
+            --text-dark: #121212;
+            --text-muted: #666;
+            --text-light: #fff;
+            --border: #f0f0f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--bg-dark);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        nav ul li a.active, nav ul li a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        nav ul li a.active {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 4px;
+        }
+
+        .nous-suivre {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--text-light);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .nous-suivre:hover {
+            background: rgba(157, 59, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--bg-hero);
+            padding: 5rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-light);
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 500px;
+        }
+
+        .hero-content span {
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            line-height: 1;
+            margin: 1.5rem 0;
+            font-weight: 800;
+        }
+
+        .hero-content p {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Main Catalog Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        aside h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .sidebar-list {
+            list-style: none;
+        }
+
+        .sidebar-list li {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #666;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .sidebar-list li.active {
+            background-color: #eee9ff;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .sidebar-list li i {
+            width: 20px;
+        }
+
+        .sidebar-list li:hover:not(.active) {
+            background-color: #f0f0f0;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .color-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .color-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+
+        .size-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .size-box {
+            padding: 8px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .size-box:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .price-range {
+            margin-bottom: 2rem;
+        }
+
+        .range-slider {
+            width: 100%;
+            height: 4px;
+            background: #ddd;
+            position: relative;
+            margin: 1.5rem 0;
+        }
+
+        .range-slider .handle {
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: absolute;
+            top: -6px;
+        }
+
+        .price-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: opacity 0.3s;
+        }
+
+        .reset-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Content Area */
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background: #fff;
+            outline: none;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+
+        .sort-by {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .sort-by select {
+            padding: 8px 12px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background: #fff;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        .badge.nouveau {
+            background: #6200ea;
+        }
+
+        .badge.best-seller {
+            background: #ff3d00;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            background: #f8f8f8;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .product-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info p {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 0.8rem;
+            height: 2.4rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-price {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .product-colors {
+            display: flex;
+            gap: 5px;
+        }
+
+        .color-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+        }
+
+        .size-tags {
+            display: flex;
+            gap: 4px;
+        }
+
+        .size-tag {
+            font-size: 0.65rem;
+            color: #999;
+            border: 1px solid #eee;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        .taille-unique {
+            font-size: 0.75rem;
+            color: #666;
+            background: #f0f0f0;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* Features Section */
+        .features {
+            background: #fff;
+            padding: 3rem 5%;
+            margin-top: 4rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: #f4ebff;
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        .feature-text h5 {
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .feature-text p {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 1.2rem;
+        }
+
+        .contact-info i {
+            color: var(--primary);
+            margin-top: 4px;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            aside {
+                display: none; /* In a real app we would have a mobile drawer */
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 2rem;
+            }
+            .hero-image {
+                justify-content: center;
+                margin-top: 2rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+            .features {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .features {
+                grid-template-columns: 1fr;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="https://replicate.delivery/xezq/mwZGbAI34RZ6BpFb3N9yU6zdQox7msjR8LPtqmWqWUa9chqF/out.png" alt="RL StudioRLK Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#" class="active">Articles</a></li>
+                <li><a href="#">Publications</a></li>
+                <li><a href="#">Événements</a></li>
+                <li><a href="#">À propos</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="nous-suivre">
+            <i class="fab fa-instagram"></i>
+            Nous suivre
+        </button>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span>ARTICLES</span>
+            <h1>Nos<br>articles.</h1>
+            <p>Des articles uniques aux couleurs de RL_StudioRLK.<br>Portez l'identité, partagez la passion.</p>
+        </div>
+        <div class="hero-image">
+            <img src="https://replicate.delivery/xezq/53MCK6KiTaJWONAHKhbaczClskqg0ntc2zfRTyXZ3RfzzFqWA/out.png" alt="Featured Merchandise">
+        </div>
+    </section>
+
+    <div class="container">
+        <aside>
+            <div class="sidebar-section">
+                <h3>Catégories</h3>
+                <ul class="sidebar-list">
+                    <li class="active"><i class="fas fa-th-large"></i> Tous les articles</li>
+                    <li><i class="fas fa-tshirt"></i> Polos</li>
+                    <li><i class="fas fa-tshirt"></i> T-shirts</li>
+                    <li><i class="fas fa-hoodie"></i> Sweatshirts</li>
+                    <li><i class="fas fa-hat-wizard"></i> Casquettes</li>
+                    <li><i class="fas fa-shopping-bag"></i> Accessoires</li>
+                    <li><i class="fas fa-gift"></i> Goodies</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Filtres</h3>
+                <span class="filter-title">Couleurs</span>
+                <div class="color-filters">
+                    <div class="color-dot" style="background-color: #5d29d6;"></div>
+                    <div class="color-dot" style="background-color: #000;"></div>
+                    <div class="color-dot" style="background-color: #fff;"></div>
+                    <div class="color-dot" style="background-color: #ccc;"></div>
+                </div>
+
+                <span class="filter-title">Tailles</span>
+                <div class="size-grid">
+                    <div class="size-box">S</div>
+                    <div class="size-box">M</div>
+                    <div class="size-box">L</div>
+                    <div class="size-box">XL</div>
+                    <div class="size-box">XXL</div>
+                </div>
+
+                <span class="filter-title">Prix</span>
+                <div class="price-range">
+                    <div class="range-slider">
+                        <div class="handle" style="left: 0;"></div>
+                        <div class="handle" style="right: 0;"></div>
+                    </div>
+                    <div class="price-labels">
+                        <span>0 FCFA</span>
+                        <span>25 000 FCFA</span>
+                    </div>
+                </div>
+
+                <button class="reset-btn">
+                    Réinitialiser les filtres <i class="fas fa-redo-alt"></i>
+                </button>
+            </div>
+        </aside>
+
+        <main>
+            <div class="content-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher un article...">
+                </div>
+                <div class="sort-by">
+                    <span>Trier par :</span>
+                    <select>
+                        <option>Nouveautés</option>
+                        <option>Prix croissant</option>
+                        <option>Prix décroissant</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <span class="badge nouveau">NOUVEAU</span>
+                    <div class="product-image">
+                        <img src="https://replicate.delivery/czjl/R2R0BHv0XTYlBhERQMee6csjW8AcCse1QVHao0lidlo7nLUtA/output.png" alt="Polo RL_StudioRLK">
+                    </div>
+                    <div class="product-info">
+                        <h4>Polo RL_StudioRLK</h4>
+                        <p>Confort et élégance au quotidien.</p>
+                        <div class="product-price">20 000 FCFA</div>
+                        <div class="product-options">
+                            <div class="product-colors">
+                                <div class="color-circle" style="background: #5d29d6;"></div>
+                                <div class="color-circle" style="background: #000;"></div>
+                                <div class="color-circle" style="background: #fff;"></div>
+                                <div class="color-circle" style="background: #ccc;"></div>
+                            </div>
+                            <div class="size-tags">
+                                <span class="size-tag">S</span>
+                                <span class="size-tag">M</span>
+                                <span class="size-tag">L</span>
+                                <span class="size-tag">XL</span>
+                                <span class="size-tag">XXL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <span class="badge nouveau">NOUVEAU</span>
+                    <div class="product-image">
+                        <img src="https://replicate.delivery/czjl/Hneoe8V8WfZxGJx9pfv053d4z2gBDL6CD8712NOj5tWxPXoaB/output.png" alt="T-shirt RL_StudioRLK">
+                    </div>
+                    <div class="product-info">
+                        <h4>T-shirt RL_StudioRLK</h4>
+                        <p>L'essentiel pour afficher votre style.</p>
+                        <div class="product-price">12 000 FCFA</div>
+                        <div class="product-options">
+                            <div class="product-colors">
+                                <div class="color-circle" style="background: #5d29d6;"></div>
+                                <div class="color-circle" style="background: #000;"></div>
+                                <div class="color-circle" style="background: #fff;"></div>
+                                <div class="color-circle" style="background: #ccc;"></div>
+                            </div>
+                            <div class="size-tags">
+                                <span class="size-tag">S</span>
+                                <span class="size-tag">M</span>
+                                <span class="size-tag">L</span>
+                                <span class="size-tag">XL</span>
+                                <span class="size-tag">XXL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <span class="badge best-seller">BEST SELLER</span>
+                    <div class="product-image">
+                        <img src="https://replicate.delivery/czjl/BhYX7QdqwF50HpQjj1dWN3aQsmRmaaq2Afky4pKf6PzenLUtA/output.png" alt="T-shirt Signature">
+                    </div>
+                    <div class="product-info">
+                        <h4>T-shirt Signature</h4>
+                        <p>Design signature RL_819.</p>
+                        <div class="product-price">13 000 FCFA</div>
+                        <div class="product-options">
+                            <div class="product-colors">
+                                <div class="color-circle" style="background: #5d29d6;"></div>
+                                <div class="color-circle" style="background: #000;"></div>
+                                <div class="color-circle" style="background: #fff;"></div>
+                                <div class="color-circle" style="background: #ccc;"></div>
+                            </div>
+                            <div class="size-tags">
+                                <span class="size-tag">S</span>
+                                <span class="size-tag">M</span>
+                                <span class="size-tag">L</span>
+                                <span class="size-tag">XL</span>
+                                <span class="size-tag">XXL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://replicate.delivery/czjl/R2R0BHv0XTYlBhERQMee6csjW8AcCse1QVHao0lidlo7nLUtA/output.png" alt="Polo Premium">
+                    </div>
+                    <div class="product-info">
+                        <h4>Polo Premium</h4>
+                        <p>Qualité supérieure, finition soignée.</p>
+                        <div class="product-price">25 000 FCFA</div>
+                        <div class="product-options">
+                            <div class="product-colors">
+                                <div class="color-circle" style="background: #5d29d6;"></div>
+                                <div class="color-circle" style="background: #000;"></div>
+                                <div class="color-circle" style="background: #fff;"></div>
+                                <div class="color-circle" style="background: #ccc;"></div>
+                            </div>
+                            <div class="size-tags">
+                                <span class="size-tag">S</span>
+                                <span class="size-tag">M</span>
+                                <span class="size-tag">L</span>
+                                <span class="size-tag">XL</span>
+                                <span class="size-tag">XXL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <span class="badge nouveau">NOUVEAU</span>
+                    <div class="product-image">
+                        <img src="https://replicate.delivery/czjl/dXo2BVJD5iaEJhPzLH1Jxrwe69vHQSjvqh5XlkxK361ezFqWA/output.png" alt="Sweat à capuche">
+                    </div>
+                    <div class="product-info">
+                        <h4>Sweat à capuche</h4>
+                        <p>Chaleur, style et identité.</p>
+                        <div class="product-price">28 000 FCFA</div>
+                        <div class="product-options">
+                            <div class="product-colors">
+                                <div class="color-circle" style="background: #5d29d6;"></div>
+                                <div class="color-circle" style="background: #000;"></div>
+                                <div class="color-circle" style="background: #fff;"></div>
+                            </div>
+                            <div class="size-tags">
+                                <span class="size-tag">S</span>
+                                <span class="size-tag">M</span>
+                                <span class="size-tag">L</span>
+                                <span class="size-tag">XL</span>
+                                <span class="size-tag">XXL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://replicate.delivery/czjl/QCpHnud8feilJEuQxS1nb5YebZWSYB5kygQ04v2UJYt8nLUtA/output.png" alt="Casquette RL_StudioRLK">
+                    </div>
+                    <div class="product-info">
+                        <h4>Casquette RL_StudioRLK</h4>
+                        <p>Accessoire indispensable.</p>
+                        <div class="product-price">10 000 FCFA</div>
+                        <div class="product-options">
+                            <div class="product-colors">
+                                <div class="color-circle" style="background: #5d29d6;"></div>
+                                <div class="color-circle" style="background: #000;"></div>
+                                <div class="color-circle" style="background: #fff;"></div>
+                            </div>
+                            <div class="taille-unique">Taille unique</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://replicate.delivery/czjl/JADvqNB8ms4AKxqicd8cz29igzymxzqJtrLkqsl71GEf5CVLA/output.png" alt="Mug RL_819">
+                    </div>
+                    <div class="product-info">
+                        <h4>Mug RL_819</h4>
+                        <p>Pour vos meilleures inspirations.</p>
+                        <div class="product-price">7 000 FCFA</div>
+                        <div class="product-options">
+                            <div class="product-colors">
+                                <div class="color-circle" style="background: #5d29d6;"></div>
+                                <div class="color-circle" style="background: #000;"></div>
+                            </div>
+                            <div class="taille-unique">Taille unique</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://replicate.delivery/czjl/XPChO0nEfZzpVCNFBLPb2EcyKffH1Xl3O3xRjkay5x16nLUtA/output.png" alt="Tote Bag RL_StudioRLK">
+                    </div>
+                    <div class="product-info">
+                        <h4>Tote Bag RL_StudioRLK</h4>
+                        <p>Pratique, solide et design.</p>
+                        <div class="product-price">8 000 FCFA</div>
+                        <div class="product-options">
+                            <div class="product-colors">
+                                <div class="color-circle" style="background: #5d29d6;"></div>
+                                <div class="color-circle" style="background: #000;"></div>
+                            </div>
+                            <div class="taille-unique">Taille unique</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <section class="features">
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="feature-text">
+                <h5>Qualité garantie</h5>
+                <p>Des matériaux sélectionnés avec soin.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-truck"></i></div>
+            <div class="feature-text">
+                <h5>Livraison rapide</h5>
+                <p>Partout en Côte d'Ivoire et à l'international.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-lock"></i></div>
+            <div class="feature-text">
+                <h5>Paiement sécurisé</h5>
+                <p>Vos paiements sont 100% sécurisés.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-headset"></i></div>
+            <div class="feature-text">
+                <h5>Support client</h5>
+                <p>Nous sommes là pour vous aider.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="https://replicate.delivery/xezq/mwZGbAI34RZ6BpFb3N9yU6zdQox7msjR8LPtqmWqWUa9chqF/out.png" alt="RL Logo" class="footer-logo">
+                <p>RL_StudioRLK - Capturez l'instant, partagez l'émotion.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="#">Accueil</a></li>
+                    <li><a href="#">Articles</a></li>
+                    <li><a href="#">Publications</a></li>
+                    <li><a href="#">Événements</a></li>
+                    <li><a href="#">À propos</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Catégories</h4>
+                <ul>
+                    <li><a href="#">Polos</a></li>
+                    <li><a href="#">T-shirts</a></li>
+                    <li><a href="#">Sweatshirts</a></li>
+                    <li><a href="#">Casquettes</a></li>
+                    <li><a href="#">Accessoires</a></li>
+                    <li><a href="#">Goodies</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-phone"></i> +225 07 07 07 07 07</li>
+                    <li><i class="fas fa-envelope"></i> rlstudiorlk@gmail.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Abidjan, Côte d'Ivoire</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 RL_StudioRLK. Tous droits réservés.
+        </div>
+    </footer>
+
+</body>
+</html>
