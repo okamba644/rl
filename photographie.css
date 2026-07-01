@@ -1,0 +1,79 @@
+/*==========================
+      PHOTOGRAPHIE
+===========================*/
+
+.product-card{
+    overflow:hidden;
+}
+
+.product-visual{
+    position:relative;
+    height:250px;
+    overflow:hidden;
+    background:#111;
+}
+
+.product-visual img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.product-card:hover .product-visual img{
+    transform:scale(1.08);
+}
+
+.product-badge{
+    position:absolute;
+    top:15px;
+    left:15px;
+    background:#9b4dff;
+    color:white;
+    padding:6px 15px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.product-info h3{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.product-info p{
+    line-height:1.7;
+    color:#bdbdbd;
+}
+
+.product-price{
+    color:#9b4dff;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.btn-order{
+    padding:10px 22px;
+    border:none;
+    background:#9b4dff;
+    color:white;
+    border-radius:25px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-order:hover{
+    background:#ff00ff;
+}
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.sidebar-title{
+    font-size:20px;
+    margin-bottom:20px;
+    color:white;
+}

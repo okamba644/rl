@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RL_STUDIORLK - Imprimerie</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #9b4dff;
+            --primary-dark: #6a1b9a;
+            --accent: #ff00ff;
+            --bg-dark: #0a0a0f;
+            --text-light: #ffffff;
+            --text-gray: #a0a0a0;
+            --nav-bg: rgba(10, 10, 15, 0.97);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #0a0a0f; color: #ededed; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1600px; margin: 0 auto; padding: 0 40px; }
+
+        /* ===== ANIMATIONS ===== */
+        .reveal { opacity: 0; transform: translateX(-60px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.from-right { transform: translateX(60px); }
+        .reveal.from-bottom { transform: translateY(40px); }
+        .reveal.visible { opacity: 1; transform: translate(0, 0); }
+        .reveal.delay-1 { transition-delay: 0.1s; }
+        .reveal.delay-2 { transition-delay: 0.2s; }
+        .reveal.delay-3 { transition-delay: 0.3s; }
+        .reveal.delay-4 { transition-delay: 0.4s; }
+
+        /* ===== NAVBAR ===== */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--nav-bg); padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 700; font-size: 22px; display: flex; align-items: center; gap: 10px; z-index: 1100; position: relative; }
+        .logo-box { border: 1px solid rgba(255,255,255,0.3); padding: 4px; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); }
+        .logo-box img { height: 40px; width: auto; display: block; object-fit: contain; }
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links li a { font-size: 14px; font-weight: 400; transition: color 0.3s; }
+        .nav-links li a:hover { color: var(--primary); }
+        .nav-links li a.active { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 4px; }
+        .btn-follow { border: 1px solid var(--primary); padding: 8px 18px; border-radius: 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; transition: background 0.3s, color 0.3s; white-space: nowrap; }
+        .btn-follow:hover { background: var(--primary); color: white; }
+
+        /* ===== HAMBURGER ===== */
+        .mobile-close { position: absolute; top: 24px; right: 24px; width: 44px; height: 44px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; padding: 0; transition: background 0.3s, border-color 0.3s; }
+        .mobile-close:hover { background: rgba(255,255,255,0.15); border-color: white; }
+        .mobile-close span { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; position: absolute; }
+        .mobile-close span:nth-child(1) { transform: rotate(45deg); }
+        .mobile-close span:nth-child(2) { transform: rotate(-45deg); }
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; cursor: pointer; z-index: 1200; position: relative; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px; background: transparent; transition: border-color 0.3s; }
+        .hamburger:hover { border-color: var(--primary); }
+        .hamburger.open { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+        .hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.35s cubic-bezier(0.4,0,0.2,1); transform-origin: center; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-dark); z-index: 1100; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+        .mobile-menu.open { opacity: 1; pointer-events: all; }
+        .mobile-menu::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(155,77,255,0.12) 0%, transparent 70%); pointer-events: none; }
+        .mobile-menu::after { content: ''; position: absolute; bottom: -200px; left: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,0,255,0.08) 0%, transparent 70%); pointer-events: none; }
+        .mobile-nav-links { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; padding: 0 30px; position: relative; z-index: 1; }
+        .mobile-nav-links li { width: 100%; text-align: center; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .mobile-menu.open .mobile-nav-links li { opacity: 1; transform: translateY(0); }
+        .mobile-menu.open .mobile-nav-links li:nth-child(1){transition-delay:.1s}
+        .mobile-menu.open .mobile-nav-links li:nth-child(2){transition-delay:.17s}
+        .mobile-menu.open .mobile-nav-links li:nth-child(3){transition-delay:.24s}
+        .mobile-menu.open .mobile-nav-links li:nth-child(4){transition-delay:.31s}
+        .mobile-menu.open .mobile-nav-links li:nth-child(5){transition-delay:.38s}
+        .mobile-menu.open .mobile-nav-links li:nth-child(6){transition-delay:.45s}
+        .mobile-nav-links li a { display: block; font-size: 28px; font-weight: 600; color: white; padding: 14px 0; letter-spacing: 1px; transition: color 0.3s; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .mobile-nav-links li:last-child a { border-bottom: none; }
+        .mobile-nav-links li a:hover, .mobile-nav-links li a.active { color: var(--accent); }
+        .mobile-follow { margin-top: 40px; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease 0.55s, transform 0.4s ease 0.55s; position: relative; z-index: 1; }
+        .mobile-menu.open .mobile-follow { opacity: 1; transform: translateY(0); }
+        .mobile-follow a { display: flex; align-items: center; gap: 10px; background: linear-gradient(90deg,#9b4dff,#ff00ff); padding: 14px 40px; border-radius: 30px; font-size: 15px; font-weight: 600; color: white; }
+        .mobile-social { display: flex; gap: 24px; margin-top: 30px; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease 0.62s, transform 0.4s ease 0.62s; position: relative; z-index: 1; }
+        .mobile-menu.open .mobile-social { opacity: 1; transform: translateY(0); }
+        .mobile-social a { color: var(--text-gray); font-size: 20px; transition: color 0.3s; }
+        .mobile-social a:hover { color: var(--accent); }
+
+        /* ===== PAGE HEADER AVEC IMAGE ===== */
+        .page-header {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Image droite 65% */
+        .page-header-img {
+            position: absolute;
+            top: 0; right: 0;
+            width: 65%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+        }
+
+        /* Dégradé gauche */
+        .page-header-fade {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #000 30%, rgba(0,0,0,0.6) 48%, rgba(0,0,0,0) 70%);
+            z-index: 1;
+        }
+
+        /* Contenu texte */
+        .page-header-content {
+            position: relative;
+            z-index: 2;
+            padding: 160px 48px 80px;
+            max-width: 700px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+            color: #d1d5db;
+            margin-bottom: 32px;
+        }
+        .breadcrumb a { color: #d1d5db; transition: color 0.3s; }
+        .breadcrumb a:hover { color: #fff; }
+        .breadcrumb .sep { color: #6b7280; }
+
+        .page-header h1 {
+            font-size: 80px;
+            font-weight: 800;
+            line-height: 1.0;
+            letter-spacing: -2px;
+            margin-bottom: 0;
+        }
+        .page-header h1 .rl-accent { color: var(--accent); }
+
+        .header-divider {
+            width: 96px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 999px;
+            margin: 24px 0 32px;
+        }
+
+        .page-sub {
+            font-size: 20px;
+            color: #d1d5db;
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        /* ===== LAYOUT ===== */
+        .shop { padding: 30px 0 100px; }
+        .imprimerie-layout { display: grid; grid-template-columns: 300px 1fr; gap: 40px; align-items: start; }
+
+        /* ----- SIDEBAR ----- */
+        .sidebar { position: sticky; top: 100px; }
+        .sidebar-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #8a8a95; margin-bottom: 16px; padding-left: 4px; }
+        .format-group { background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.09); border-radius: 14px; margin-bottom: 14px; overflow: hidden; }
+        .group-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; cursor: pointer; font-size: 15px; font-weight: 600; color: #f0f0f0; transition: background 0.25s; }
+        .group-header:hover { background: rgba(255,255,255,0.05); }
+        .group-header .g-label { display: flex; align-items: center; gap: 12px; }
+        .group-header .g-label i { color: #b6b6c0; font-size: 16px; width: 18px; text-align: center; }
+        .group-header .arrow { font-size: 12px; color: #777; transition: transform 0.3s; }
+        .format-group.open .group-header .arrow { transform: rotate(180deg); color: var(--accent); }
+        .group-items { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .format-group.open .group-items { max-height: 320px; }
+        .sub-item { font-size: 13.5px; color: #9a9aa5; padding: 11px 18px 11px 46px; cursor: pointer; position: relative; transition: background 0.2s, color 0.2s; }
+        .sub-item::before { content: ''; position: absolute; left: 24px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.25); transition: background 0.2s; }
+        .sub-item:hover { color: #ffffff; background: rgba(255,255,255,0.045); }
+        .sub-item:hover::before { background: #b6b6c0; }
+        .sub-item.active { color: #ffffff; background: rgba(255,255,255,0.07); font-weight: 500; }
+        .sub-item.active::before { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+
+        /* ----- PRODUITS ----- */
+        .product-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 26px; flex-wrap: wrap; gap: 10px; }
+        .product-head h2 { font-size: 24px; color: #ffffff; }
+        .product-head h2 span { color: var(--accent); font-weight: 400; }
+        .product-count { font-size: 13px; color: #8a8a95; }
+        .product-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+        .product-card { background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; overflow: hidden; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; opacity: 0; transform: translateY(18px); }
+        .product-card.show { opacity: 1; transform: translateY(0); }
+        .product-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.22); box-shadow: 0 18px 44px rgba(0,0,0,0.5); }
+        .product-visual { height: 170px; position: relative; background: linear-gradient(135deg, #1b1b22 0%, #2a2a33 100%); overflow: hidden; }
+        .product-visual .fallback-icon { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 48px; color: rgba(255,255,255,0.78); z-index: 1; }
+        .product-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; transition: transform 0.4s; }
+        .product-visual img.img-failed { display: none; }
+        .product-card:hover .product-visual img { transform: scale(1.05); }
+        .product-badge { position: absolute; top: 12px; left: 12px; z-index: 3; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.16); color: #fff; padding: 4px 12px; border-radius: 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .product-info { padding: 18px; display: flex; flex-direction: column; flex: 1; }
+        .product-info h3 { font-size: 16px; margin-bottom: 8px; color: #ffffff; }
+        .product-info p { font-size: 12.5px; color: #9a9aa5; line-height: 1.5; margin-bottom: 16px; flex: 1; }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; }
+        .product-price { font-size: 12.5px; color: #cfcfd6; }
+        .product-price b { color: var(--accent); font-size: 15px; }
+        .btn-order { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.16); color: #ffffff; font-size: 12px; font-weight: 500; padding: 7px 15px; border-radius: 18px; transition: background 0.3s, border-color 0.3s, color 0.3s; cursor: pointer; }
+        .btn-order:hover { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+
+        /* ===== FOOTER ===== */
+        footer { padding: 80px 0 30px; background: linear-gradient(to bottom, #0a0a0f, #1a0a2e); border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 50px; margin-bottom: 60px; }
+        .footer-logo-desc p { font-size: 13px; color: var(--text-gray); margin-top: 20px; max-width: 250px; line-height: 1.7; }
+        .footer-col h4 { font-size: 14px; margin-bottom: 22px; color: var(--text-light); }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { font-size: 13px; color: var(--text-gray); transition: color 0.3s; }
+        .footer-col ul li a:hover { color: var(--primary); }
+        .footer-contact p { font-size: 13px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .social-icons { display: flex; gap: 20px; }
+        .social-icons a { color: var(--text-gray); font-size: 18px; transition: color 0.3s; }
+        .social-icons a:hover { color: var(--accent); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 28px; text-align: center; font-size: 12px; color: var(--text-gray); }
+
+        /* ===== RESPONSIVE TABLET ===== */
+        @media (max-width: 900px) {
+            .nav-links, .btn-follow { display: none; }
+            .hamburger { display: flex; }
+            .mobile-menu { display: flex; }
+            .container { padding: 0 28px; }
+            .page-header-img { width: 100%; opacity: 0.3; }
+            .page-header-fade { background: rgba(0,0,0,0.65); }
+            .page-header-content { padding: 130px 28px 60px; }
+            .page-header h1 { font-size: 48px; letter-spacing: -1px; }
+            .page-sub { font-size: 16px; }
+            .imprimerie-layout { grid-template-columns: 1fr; gap: 30px; }
+            .sidebar { position: static; }
+            .product-grid { grid-template-columns: repeat(2,1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 35px; }
+            .footer-logo-desc { grid-column: 1 / -1; }
+        }
+
+        /* ===== RESPONSIVE MOBILE ===== */
+        @media (max-width: 600px) {
+            .page-header-content { padding: 120px 20px 50px; }
+            .page-header h1 { font-size: 36px; letter-spacing: 0; }
+            .page-sub { font-size: 15px; }
+            .header-divider { width: 60px; }
+            .breadcrumb { font-size: 15px; }
+            .product-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            footer { padding: 60px 0 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo"><div class="logo-box"><img src="LOGO.png" alt="RL Studio Logo"></div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="imprimerie.html" class="active">Imprimerie</a></li>
+                <li><a href="photographie.html">Photographie</a></li>
+                <li><a href="vidéographie.html">Vidéographie</a></li>
+                <li><a href="articles.html">Articles</a></li>
+               
+                <li><a href="a propos.html">À propos</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+            </ul>
+            <a href="#" class="btn-follow"><i class="fab fa-instagram"></i> Nous suivre</a>
+            <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- ==================== MOBILE MENU ==================== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" id="mobileClose" aria-label="Fermer le menu"><span></span><span></span></button>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="imprimerie.html" class="active">Imprimerie</a></li>
+            <li><a href="photographie.html">Photographie</a></li>
+            <li><a href="videographie.html">Vidéographie</a></li>
+           <li><a href="articles.html">Articles</a></li>
+            <li><a href="a propos.html">À propos</a></li>
+            <li><a href="contacts.html">Contact</a></li>
+        </ul>
+        <div class="mobile-follow"><a href="#"><i class="fab fa-instagram"></i> Nous suivre</a></div>
+        <div class="mobile-social">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE HEADER ==================== -->
+    <section class="page-header">
+        <!-- ← remplace TON_IMAGE.jpg par ton image -->
+        <img src="imprimerie.png" class="page-header-img" alt="Imprimerie">
+        <div class="page-header-fade"></div>
+        <div class="page-header-content">
+            <div class="breadcrumb reveal">
+                <a href="index.html">Accueil</a>
+                <span class="sep">/</span>
+                <span>Imprimerie</span>
+            </div>
+            <h1 class="reveal delay-1">
+                <span class="rl-accent">Imprime</span>rie
+            </h1>
+            <div class="header-divider reveal delay-2"></div>
+            <p class="page-sub reveal delay-3">
+               Petit, moyen ou grand format : choisissez une rubrique à gauche pour découvrir nos supports et les réserver.
+            </p>
+        </div>
+    </section>
+
+    <!-- ==================== SHOP ==================== -->
+    <section class="shop">
+        <div class="container">
+            <div class="imprimerie-layout">
+                <aside class="sidebar reveal">
+                    <p class="sidebar-title">Nos formats</p>
+                    <div id="sidebarNav"></div>
+                </aside>
+                <div class="product-area">
+                    <div class="product-head">
+                        <h2 id="rubriqueTitle">Petit format <span id="subTitle">· Carte de visite</span></h2>
+                        <span class="product-count" id="productCount"></span>
+                    </div>
+                    <div class="product-grid" id="productGrid"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo-desc">
+                    <div class="logo"><div class="logo-box"><img src="LOGO.png" alt="RL Studio Logo"></div></div>
+                    <p>RL_StudioRLK - Capturez l'instant, partagez l'émotion.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="index.html">Articles</a></li>
+                        <li><a href="index.html">Publications</a></li>
+                        <li><a href="index.html#evenements">Événements</a></li>
+                        <li><a href="apropos.html">À propos</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Catégories</h4>
+                    <ul>
+                        <li><a href="photographie.html">Photographie</a></li>
+                        <li><a href="videographie.html">Vidéographie</a></li>
+                        <li><a href="imprimerie.html">Imprimerie</a></li>
+                        <li><a href="#">Événements</a></li>
+                        <li><a href="#">Actualités</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Suivez-nous</h4>
+                    <div class="social-icons" style="margin-bottom:22px;">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> Rabat, Maroc</p>
+                        <p><i class="far fa-envelope"></i> contact@rlstudiorlk.com</p>
+                        <p><i class="fas fa-phone-alt"></i> +212 62 44 52 70 1</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">&copy; 2025 RL_StudioRLK. Tous droits réservés.</div>
+        </div>
+    </footer>
+
+    <script>
+        /* ===== HAMBURGER ===== */
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        function openMenu(){ hamburger.classList.add('open'); mobileMenu.classList.add('open'); document.body.style.overflow='hidden'; }
+        function closeMenu(){ hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); document.body.style.overflow=''; }
+        hamburger.addEventListener('click', openMenu);
+        mobileClose.addEventListener('click', closeMenu);
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMenu));
+
+        /* ===== CATALOGUE ===== */
+        const catalog = {
+            petit: {
+                label: "Petit format", icon: "fa-file",
+                subs: {
+                    "carte-visite": { label: "Carte de visite", icon: "fa-id-card", products: [
+                        { name: "Carte de visite standard", desc: "Papier 300g, recto simple, finition mate.", price: "90 DH", unit: "/ 100 ex.", seed: "cartevisite1" },
+                        { name: "Carte premium pelliculée", desc: "350g, pelliculage soft-touch haut de gamme.", price: "140 DH", unit: "/ 100 ex.", seed: "cartevisite2" },
+                        { name: "Carte recto-verso couleur", desc: "Impression quadri sur les deux faces.", price: "120 DH", unit: "/ 100 ex.", seed: "cartevisite3" }
+                    ]},
+                    "autocollant": { label: "Autocollant", icon: "fa-sticky-note", products: [
+                        { name: "Autocollant rond brillant", desc: "Vinyle adhésif, finition brillante.", price: "60 DH", unit: "/ planche", seed: "sticker1" },
+                        { name: "Autocollant découpe forme", desc: "Découpe à la forme personnalisée.", price: "80 DH", unit: "/ planche", seed: "sticker2" },
+                        { name: "Sticker vinyle résistant", desc: "Résistant eau et UV, usage extérieur.", price: "75 DH", unit: "/ planche", seed: "sticker3" }
+                    ]},
+                    "tirage-plan": { label: "Tirage de plan", icon: "fa-drafting-compass", products: [
+                        { name: "Tirage de plan A1 N&B", desc: "Impression technique noir & blanc.", price: "25 DH", unit: "/ unité", seed: "plan1" },
+                        { name: "Tirage de plan A0 couleur", desc: "Grand format couleur haute précision.", price: "45 DH", unit: "/ unité", seed: "plan2" },
+                        { name: "Tirage pelliculé", desc: "Plan protégé par pelliculage durable.", price: "60 DH", unit: "/ unité", seed: "plan3" }
+                    ]},
+                    "mise-page": { label: "Mise en page", icon: "fa-pen-nib", products: [
+                        { name: "Mise en page document", desc: "Mise en forme propre de vos documents.", price: "50 DH", unit: "/ page", seed: "pao1" },
+                        { name: "Maquette de brochure", desc: "Conception graphique complète.", price: "120 DH", unit: "/ projet", seed: "pao2" },
+                        { name: "Maquette PAO sur-mesure", desc: "Création graphique entièrement sur-mesure.", price: "200 DH", unit: "/ projet", seed: "pao3" }
+                    ]}
+                }
+            },
+            moyen: {
+                label: "Moyen format", icon: "fa-file-alt",
+                subs: {
+                    "menu-restaurant": { label: "Menu restaurant", icon: "fa-utensils", products: [
+                        { name: "Menu plastifié A4", desc: "Plastification résistante, recto-verso.", price: "35 DH", unit: "/ unité", seed: "menu1" },
+                        { name: "Menu chevalet de table", desc: "Présentoir de table autoportant.", price: "50 DH", unit: "/ unité", seed: "menu2" },
+                        { name: "Menu format livret", desc: "Plusieurs pages agrafées soignées.", price: "90 DH", unit: "/ unité", seed: "menu3" }
+                    ]},
+                    "catalogue": { label: "Catalogue", icon: "fa-book-open", products: [
+                        { name: "Catalogue agrafé 16 pages", desc: "Reliure agrafée, papier couché brillant.", price: "350 DH", unit: "/ 50 ex.", seed: "catalogue1" },
+                        { name: "Catalogue dos carré collé", desc: "Reliure pro pour les gros volumes.", price: "700 DH", unit: "/ 50 ex.", seed: "catalogue2" },
+                        { name: "Catalogue produits couleur", desc: "Quadri, mise en valeur de vos produits.", price: "500 DH", unit: "/ 50 ex.", seed: "catalogue3" }
+                    ]},
+                    "brochure": { label: "Brochure", icon: "fa-book", products: [
+                        { name: "Brochure A5 8 pages", desc: "Format compact, reliure agrafée.", price: "250 DH", unit: "/ 100 ex.", seed: "brochure1" },
+                        { name: "Brochure 3 volets", desc: "Pliage roulé professionnel.", price: "400 DH", unit: "/ 250 ex.", seed: "brochure2" },
+                        { name: "Brochure premium couché", desc: "Papier couché brillant 170g.", price: "600 DH", unit: "/ 100 ex.", seed: "brochure3" }
+                    ]},
+                    "livres-musicaux": { label: "Livres musicaux", icon: "fa-music", products: [
+                        { name: "Recueil de chants A5", desc: "Idéal louange et chorale, multilingue.", price: "300 DH", unit: "/ 50 ex.", seed: "chants1" },
+                        { name: "Livret de partitions", desc: "Partitions claires, reliure souple.", price: "450 DH", unit: "/ 50 ex.", seed: "chants2" },
+                        { name: "Carnet de louange relié", desc: "Reliure soignée, finition premium.", price: "550 DH", unit: "/ 50 ex.", seed: "chants3" }
+                    ]}
+                }
+            },
+            grand: {
+                label: "Grand format", icon: "fa-expand",
+                subs: {
+                    "bache": { label: "Bâche", icon: "fa-flag", products: [
+                        { name: "Bâche publicitaire PVC", desc: "PVC résistant, œillets inclus.", price: "150 DH", unit: "/ m²", seed: "bache1" },
+                        { name: "Bâche événementielle", desc: "Grand format pour stands et scènes.", price: "170 DH", unit: "/ m²", seed: "bache2" },
+                        { name: "Bâche micro-perforée", desc: "Idéale façades, laisse passer le vent.", price: "200 DH", unit: "/ m²", seed: "bache3" }
+                    ]}
+                }
+            }
+        };
+
+        const sidebarNav = document.getElementById('sidebarNav');
+        const productGrid = document.getElementById('productGrid');
+        const rubriqueTitle = document.getElementById('rubriqueTitle');
+        const subTitle = document.getElementById('subTitle');
+        const productCount = document.getElementById('productCount');
+
+        function buildSidebar(){
+            let html = "";
+            Object.keys(catalog).forEach(gKey => {
+                const g = catalog[gKey];
+                html += '<div class="format-group" data-group="' + gKey + '">';
+                html += '  <div class="group-header"><span class="g-label"><i class="fas ' + g.icon + '"></i> ' + g.label + '</span><i class="fas fa-chevron-down arrow"></i></div>';
+                html += '  <ul class="group-items">';
+                Object.keys(g.subs).forEach(sKey => {
+                    html += '<li class="sub-item" data-group="' + gKey + '" data-sub="' + sKey + '">' + g.subs[sKey].label + '</li>';
+                });
+                html += '  </ul>';
+                html += '</div>';
+            });
+            sidebarNav.innerHTML = html;
+
+            document.querySelectorAll('.group-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const group = header.parentElement;
+                    const wasOpen = group.classList.contains('open');
+                    document.querySelectorAll('.format-group').forEach(g => g.classList.remove('open'));
+                    if(!wasOpen){
+                        group.classList.add('open');
+                        const firstSub = group.querySelector('.sub-item');
+                        if(firstSub) selectSub(firstSub.dataset.group, firstSub.dataset.sub);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.sub-item').forEach(item => {
+                item.addEventListener('click', () => selectSub(item.dataset.group, item.dataset.sub));
+            });
+        }
+
+        function selectSub(gKey, sKey){
+            const group = catalog[gKey];
+            const sub = group.subs[sKey];
+
+            document.querySelectorAll('.sub-item').forEach(i => i.classList.remove('active'));
+            const activeItem = document.querySelector('.sub-item[data-group="'+gKey+'"][data-sub="'+sKey+'"]');
+            if(activeItem) activeItem.classList.add('active');
+
+            rubriqueTitle.childNodes[0].nodeValue = group.label + " ";
+            subTitle.textContent = "· " + sub.label;
+            productCount.textContent = sub.products.length + (sub.products.length > 1 ? " produits" : " produit");
+
+            let cards = "";
+            sub.products.forEach(p => {
+                const img = "https://picsum.photos/seed/" + p.seed + "/400/280";
+                cards +=
+                '<div class="product-card">' +
+                  '<div class="product-visual">' +
+                    '<i class="fas ' + sub.icon + ' fallback-icon"></i>' +
+                    '<img src="' + img + '" alt="' + p.name + '" onerror="this.classList.add(\'img-failed\')">' +
+                    '<span class="product-badge">' + sub.label + '</span>' +
+                  '</div>' +
+                  '<div class="product-info">' +
+                    '<h3>' + p.name + '</h3>' +
+                    '<p>' + p.desc + '</p>' +
+                    '<div class="product-footer">' +
+                     
+                      '<a href="contacts.html" class="btn-order">Commander</a>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>';
+            });
+            productGrid.innerHTML = cards;
+
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.product-card').forEach((c, idx) => {
+                    setTimeout(() => c.classList.add('show'), idx * 70);
+                });
+            });
+        }
+
+        buildSidebar();
+        document.querySelector('.format-group[data-group="petit"]').classList.add('open');
+        selectSub('petit', 'carte-visite');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.page-header .reveal, .sidebar.reveal').forEach(el => el.classList.add('visible'));
+        });
+    </script>
+</body>
+</html>

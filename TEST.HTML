@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RL — Photographie</title>
+<script src="https://cdn.jsdelivr.net/npm/react@18.0.0/umd/react.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.0.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Poppins', sans-serif; }
+</style>
+</head>
+<body class="bg-black">
+<div id="root"></div>
+<script type="text/babel">
+const nav = ["Accueil","Imprimerie","Photographie","Vidéographie","Article","Événements","À propos","Contact"];
+
+function App() {
+  return (
+    <div className="relative min-h-screen w-full overflow-hidden bg-black text-white">
+      {/* Background image */}
+      <img src="https://cdn.screenshottocode.com/I1AW57CKB7-oTdLzqu-oQ.png"
+           className="absolute right-0 top-0 h-full w-[65%] object-cover object-center" alt="camera"/>
+      {/* Left fade */}
+      <div className="absolute inset-0" style={{background:"linear-gradient(90deg, #000 30%, rgba(0,0,0,0.6) 48%, rgba(0,0,0,0) 70%)"}}></div>
+
+      {/* Nav */}
+      <header className="relative z-10 flex items-center justify-between px-6 md:px-12 py-6">
+        <div className="flex items-center">
+          <div className="w-16 h-16 rounded-2xl border-2 border-fuchsia-500 flex flex-col items-center justify-center leading-none">
+            <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-b from-fuchsia-400 to-fuchsia-600 bg-clip-text text-transparent">RL</span>
+            <span className="text-[6px] tracking-[0.2em] text-fuchsia-300 mt-0.5">CRÉATION NUMÉRIQUE</span>
+          </div>
+        </div>
+        <nav className="hidden lg:flex items-center gap-9 text-[15px] font-medium">
+          {nav.map(n => (
+            <a key={n} href="#" className={`relative pb-1 transition-colors ${n==="Photographie" ? "text-fuchsia-500" : "text-white hover:text-fuchsia-400"}`}>
+              {n}
+              {n==="Photographie" && <span className="absolute left-0 -bottom-0.5 h-0.5 w-full bg-fuchsia-500 rounded-full"></span>}
+            </a>
+          ))}
+        </nav>
+        <button className="flex items-center gap-2 rounded-full border border-fuchsia-500 px-5 py-2.5 text-sm font-medium hover:bg-fuchsia-500/10 transition">
+          <i className="fab fa-instagram text-lg"></i> Nous suivre
+        </button>
+      </header>
+
+      {/* Hero content */}
+      <main className="relative z-10 px-6 md:px-12 mt-20 md:mt-28 max-w-2xl">
+        <div className="flex items-center gap-3 text-lg text-gray-300 mb-8">
+          <span>Accueil</span>
+          <span className="text-gray-500">/</span>
+          <span>Photographie</span>
+        </div>
+        <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight">
+          <span className="text-fuchsia-500">Photo</span><span className="text-white">graphie</span>
+        </h1>
+        <div className="h-1 w-24 bg-fuchsia-500 rounded-full mt-6"></div>
+        <p className="mt-8 text-lg md:text-xl text-gray-300 leading-relaxed max-w-xl">
+          Mariage, événements, portraits — choisissez une rubrique à gauche et découvrez nos formules avec tarifs en dirhams.
+        </p>
+      </main>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

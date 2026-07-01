@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RL_STUDIORLK - Capturez l'instant</title>
+    <title>RL_STUDIORLK - Une image qui vous représente</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -24,7 +24,7 @@
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1600px; margin: 0 auto; padding: 0 40px; }
 
         /* ===== SCROLL ANIMATIONS ===== */
         .reveal {
@@ -287,25 +287,15 @@
 
         .hero-text h4 { color: var(--text-gray); font-size: 13px; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 2px; }
 
-        .hero-text h1 { font-size: 72px; line-height: 1.1; margin-bottom: 30px; }
-        .hero-text h1 span { color: var(--accent); display: block; }
+        .hero-text h1 { font-size: 72px; line-height: 1.1; margin-bottom: 24px; font-weight: 700; }
+        .hero-text h1 .rl-accent { color: var(--accent); }
+
+        .hero-divider { width: 70px; height: 2px; background: var(--primary); border-radius: 2px; margin-bottom: 28px; }
+
+        .hero-slogan { font-size: 42px; font-weight: 300; line-height: 1.2; color: var(--text-light); margin-bottom: 28px; }
+        .hero-slogan span { color: var(--accent); display: block; font-weight: 400; }
+
         .hero-text p { color: var(--text-gray); font-size: 16px; margin-bottom: 40px; line-height: 1.6; }
-
-        .hero-btns { display: flex; gap: 20px; align-items: center; margin-bottom: 40px; flex-wrap: wrap; }
-
-        .btn-primary {
-            background: linear-gradient(90deg, #9b4dff, #ff00ff);
-            padding: 12px 28px;
-            border-radius: 5px;
-            font-weight: 600;
-            font-size: 14px;
-            display: inline-block;
-            transition: opacity 0.3s;
-        }
-        .btn-primary:hover { opacity: 0.85; }
-
-        .btn-link { font-size: 14px; display: flex; align-items: center; gap: 10px; }
-        .btn-link:hover { color: var(--accent); }
 
         .social-icons { display: flex; gap: 20px; }
         .social-icons a { color: var(--text-gray); font-size: 18px; transition: color 0.3s; }
@@ -396,7 +386,7 @@
         .article-date { font-size: 11px; color: #aaa; }
 
         /* ===== EVENTS ===== */
-        .events { background: #0d0d16; padding: 100px 0; }
+        .events { background: #0d0d16; padding: 100px 0; scroll-margin-top: 90px; }
         .events-slider { display: flex; gap: 20px; align-items: center; }
 
         .event-card {
@@ -444,11 +434,14 @@
             .hamburger { display: flex; }
             .mobile-menu { display: flex; }
 
+            .container { padding: 0 28px; }
+
             /* Hero */
             .hero-content { flex-direction: column; text-align: center; gap: 50px; }
             .hero-text { max-width: 100%; }
             .hero-text h1 { font-size: 52px; }
-            .hero-btns { justify-content: center; }
+            .hero-slogan { font-size: 34px; }
+            .hero-divider { margin-left: auto; margin-right: auto; }
             .social-icons { justify-content: center; }
             .hero-image { justify-content: center; width: 100%; }
             .hero-image-wrapper { width: 100%; max-width: 420px; height: 320px; }
@@ -484,11 +477,11 @@
         /* ===================================================== */
         @media (max-width: 600px) {
             .hero { padding-top: 110px; padding-bottom: 70px; }
+            .container { padding: 0 20px; }
             .hero-text h1 { font-size: 40px; }
+            .hero-slogan { font-size: 28px; }
             .hero-text h4 { font-size: 12px; }
             .hero-text p { font-size: 14px; }
-            .hero-btns { flex-direction: column; align-items: center; gap: 14px; }
-            .btn-primary { width: 100%; text-align: center; }
             .hero-image-wrapper { height: 260px; }
 
             /* About */
@@ -533,14 +526,17 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#" class="active">Accueil</a></li>
-                <li><a href="article.html">Articles</a></li>
-                <li><a href="#">Publications</a></li>
-                <li><a href="#">Événements</a></li>
-                <li><a href="#">À propos</a></li>
+                <li><a href="imprimerie.html">Imprimerie</a></li>
+
+                 <li><a href="photographie.html">Photographie</a></li>
+                  <li><a href="vidéographie.html">Vidéographie</a></li>
+                  <li><a href="articles.html">Articles</a></li>
+               
+                <li><a href="a propos.html">À propos</a></li>
                 <li><a href="contacts.html">Contact</a></li>
             </ul>
 
-            <a href="#" class="btn-follow">
+            <a href="https://www.instagram.com/rl_studiorlk/" class="btn-follow">
                 <i class="fab fa-instagram"></i> Nous suivre
             </a>
 
@@ -560,11 +556,14 @@
             <span></span>
         </button>
         <ul class="mobile-nav-links">
-            <li><a href="#" class="active">Accueil</a></li>
-            <li><a href="article.html">Articles</a></li>
-            <li><a href="#">Publications</a></li>
-            <li><a href="#">Événements</a></li>
-            <li><a href="#">À propos</a></li>
+            <li><a href="index.html" class="active">Accueil</a></li>
+             <li><a href="imprimerie.html" >Imprimerie</a></li>
+            <li><a href="photographie.html">Photographie</a></li>
+            <li><a href="videographie.html">Vidéographie</a></li>
+            <li><a href="articles.html">Articles</a></li>
+           
+           
+            <li><a href="a propos.html">À propos</a></li>
             <li><a href="contacts.html">Contact</a></li>
         </ul>
         <div class="mobile-follow">
@@ -573,9 +572,9 @@
             </a>
         </div>
         <div class="mobile-social">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/rl_studiorlk/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/Rl819"><i class="fab fa-facebook-f"></i></a>
+          
             <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
     </div>
@@ -586,16 +585,14 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <h4 class="reveal delay-1">RL_STUDIORLK</h4>
-                    <h1 class="reveal delay-2">Capturez <span>l'instant.</span></h1>
-                    <p class="reveal delay-3">Photographie, création visuelle et storytelling au service de vos moments uniques.</p>
-                    <div class="hero-btns reveal delay-4">
-                        <a href="#" class="btn-primary">Découvrir les articles</a>
-                        <a href="#" class="btn-link">Voir les événements <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="social-icons reveal delay-5">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <h1 class="reveal delay-2"><span class="rl-accent">RL</span> Studio</h1>
+                    <div class="hero-divider reveal delay-3"></div>
+                    <p class="hero-slogan reveal delay-4">Une image qui <span>vous représente</span></p>
+                    <div class="hero-divider reveal delay-5"></div>
+                    <div class="social-icons reveal delay-6">
+                        <a href="https://www.instagram.com/rl_studiorlk/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/Rl819" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="hero-image reveal from-right delay-3">
@@ -620,7 +617,7 @@
                         <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
                     </div>
                     <img src="PASTEUR CHANTAL.jpg" alt="Studio work" class="main-about-img">
-                    <img src="rL.jpg"Camera lens" class="overlay-about-img">
+                    <img src="rL.jpg" alt="Camera lens" class="overlay-about-img">
                 </div>
                 <div class="about-text">
                     <h4 class="reveal delay-2">RL_STUDIORLK</h4>
@@ -709,7 +706,7 @@
     </section>
 
     <!-- ==================== EVENTS ==================== -->
-    <section class="events">
+    <section class="events" id="evenements">
         <div class="container">
             <div class="section-header">
                 <div class="reveal delay-1">
@@ -779,7 +776,7 @@
                         <li><a href="#">Accueil</a></li>
                         <li><a href="#">Articles</a></li>
                         <li><a href="#">Publications</a></li>
-                        <li><a href="#">Événements</a></li>
+                        <li><a href="#evenements">Événements</a></li>
                         <li><a href="#">À propos</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
@@ -797,10 +794,10 @@
                 <div class="footer-col reveal delay-4">
                     <h4>Suivez-nous</h4>
                     <div class="social-icons" style="margin-bottom:22px;">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/rl_studiorlk/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/Rl819" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                      
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
                     </div>
                     <div class="footer-contact">
                         <p><i class="fas fa-map-marker-alt"></i> Rabat, Maroc</p>

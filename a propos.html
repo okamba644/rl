@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RL_STUDIORLK - À propos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #9b4dff;
+            --accent: #ff00ff;
+            --bg-dark: #0a0a0f;
+            --text-light: #ffffff;
+            --text-gray: #a0a0a0;
+            --nav-bg: rgba(10, 10, 15, 0.97);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-dark); color: #ededed; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1600px; margin: 0 auto; padding: 0 40px; }
+
+        /* ===== ANIMATIONS ===== */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.from-left { transform: translateX(-60px); }
+        .reveal.from-right { transform: translateX(60px); }
+        .reveal.visible { opacity: 1; transform: translate(0, 0); }
+        .reveal.delay-1 { transition-delay: 0.1s; }
+        .reveal.delay-2 { transition-delay: 0.2s; }
+        .reveal.delay-3 { transition-delay: 0.3s; }
+        .reveal.delay-4 { transition-delay: 0.4s; }
+        .reveal.delay-5 { transition-delay: 0.5s; }
+
+        /* ===== NAVBAR ===== */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--nav-bg); padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 700; font-size: 22px; display: flex; align-items: center; gap: 10px; z-index: 1100; position: relative; }
+        .logo-box { border: 1px solid rgba(255,255,255,0.3); padding: 4px; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); }
+        .logo-box img { height: 40px; width: auto; display: block; object-fit: contain; }
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links li a { font-size: 14px; font-weight: 400; transition: color 0.3s; }
+        .nav-links li a:hover { color: var(--primary); }
+        .nav-links li a.active { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 4px; }
+        .btn-follow { border: 1px solid var(--primary); padding: 8px 18px; border-radius: 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; transition: background 0.3s, color 0.3s; white-space: nowrap; }
+        .btn-follow:hover { background: var(--primary); color: white; }
+
+        /* ===== HAMBURGER ===== */
+        .mobile-close { position: absolute; top: 24px; right: 24px; width: 44px; height: 44px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; padding: 0; transition: background 0.3s, border-color 0.3s; }
+        .mobile-close:hover { background: rgba(255,255,255,0.15); border-color: white; }
+        .mobile-close span { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; position: absolute; }
+        .mobile-close span:nth-child(1) { transform: rotate(45deg); }
+        .mobile-close span:nth-child(2) { transform: rotate(-45deg); }
+        .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; cursor: pointer; z-index: 1200; position: relative; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px; background: transparent; transition: border-color 0.3s; }
+        .hamburger:hover { border-color: var(--primary); }
+        .hamburger.open { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+        .hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.35s cubic-bezier(0.4,0,0.2,1); transform-origin: center; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-dark); z-index: 1100; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+        .mobile-menu.open { opacity: 1; pointer-events: all; }
+        .mobile-menu::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(155,77,255,0.12) 0%, transparent 70%); pointer-events: none; }
+        .mobile-menu::after { content: ''; position: absolute; bottom: -200px; left: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,0,255,0.08) 0%, transparent 70%); pointer-events: none; }
+        .mobile-nav-links { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; padding: 0 30px; position: relative; z-index: 1; }
+        .mobile-nav-links li { width: 100%; text-align: center; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .mobile-menu.open .mobile-nav-links li { opacity: 1; transform: translateY(0); }
+        .mobile-menu.open .mobile-nav-links li:nth-child(1){transition-delay:.1s}
+        .mobile-menu.open .mobile-nav-links li:nth-child(2){transition-delay:.17s}
+        .mobile-menu.open .mobile-nav-links li:nth-child(3){transition-delay:.24s}
+        .mobile-menu.open .mobile-nav-links li:nth-child(4){transition-delay:.31s}
+        .mobile-menu.open .mobile-nav-links li:nth-child(5){transition-delay:.38s}
+        .mobile-menu.open .mobile-nav-links li:nth-child(6){transition-delay:.45s}
+        .mobile-nav-links li a { display: block; font-size: 28px; font-weight: 600; color: white; padding: 14px 0; letter-spacing: 1px; transition: color 0.3s; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .mobile-nav-links li:last-child a { border-bottom: none; }
+        .mobile-nav-links li a:hover, .mobile-nav-links li a.active { color: var(--accent); }
+        .mobile-follow { margin-top: 40px; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease 0.55s, transform 0.4s ease 0.55s; position: relative; z-index: 1; }
+        .mobile-menu.open .mobile-follow { opacity: 1; transform: translateY(0); }
+        .mobile-follow a { display: flex; align-items: center; gap: 10px; background: linear-gradient(90deg,#9b4dff,#ff00ff); padding: 14px 40px; border-radius: 30px; font-size: 15px; font-weight: 600; color: white; }
+        .mobile-social { display: flex; gap: 24px; margin-top: 30px; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease 0.62s, transform 0.4s ease 0.62s; position: relative; z-index: 1; }
+        .mobile-menu.open .mobile-social { opacity: 1; transform: translateY(0); }
+        .mobile-social a { color: var(--text-gray); font-size: 20px; transition: color 0.3s; }
+        .mobile-social a:hover { color: var(--accent); }
+
+        /* ===== HERO IMMERSIF ===== */
+        .hero-about {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-about-bg {
+            position: absolute;
+            inset: 0;
+            background: url('VOTRE_PHOTO_HERO.jpg') no-repeat center center; /* ← ton image */
+            background-size: cover;
+            z-index: 0;
+            transform: scale(1.05);
+            transition: transform 8s ease;
+        }
+        .hero-about-bg.loaded { transform: scale(1); }
+
+        /* Dégradé sombre sur toute la surface */
+        .hero-about::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                rgba(10,10,15,0.92) 0%,
+                rgba(10,10,15,0.65) 50%,
+                rgba(10,10,15,0.3) 100%
+            );
+            z-index: 1;
+        }
+
+        .hero-about .container {
+            position: relative;
+            z-index: 2;
+            padding-top: 120px;
+            padding-bottom: 80px;
+        }
+
+        .hero-about-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .hero-about-label::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero-about h1 {
+            font-size: 80px;
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: 30px;
+            max-width: 700px;
+        }
+        .hero-about h1 span { color: var(--accent); }
+
+        .hero-about-desc {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 50px;
+        }
+
+        .hero-scroll {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: rgba(255,255,255,0.45);
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollPulse 2s ease infinite;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* ===== SECTION LABEL COMMUN ===== */
+        .section-tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .section-tag::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        /* ===== VALEURS ===== */
+        .valeurs {
+            padding: 120px 0;
+            background: #0d0d18;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .valeurs::before {
+            content: '';
+            position: absolute;
+            top: -200px; right: -200px;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(155,77,255,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .valeurs-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .valeurs-image {
+            position: relative;
+            height: 600px;
+        }
+
+        .valeurs-img-main {
+            width: 75%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            display: block;
+        }
+
+        .valeurs-img-overlay {
+            position: absolute;
+            bottom: -40px;
+            right: 0;
+            width: 55%;
+            height: 60%;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 6px solid var(--bg-dark);
+        }
+
+        .valeurs-accent-line {
+            position: absolute;
+            top: 40px;
+            left: -20px;
+            width: 4px;
+            height: 120px;
+            background: linear-gradient(to bottom, var(--accent), var(--primary));
+            border-radius: 2px;
+        }
+
+        .valeurs-text h2 {
+            font-size: 46px;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            color: white;
+        }
+        .valeurs-text h2 span { color: var(--accent); }
+
+        .valeurs-text > p {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+            margin-bottom: 48px;
+            max-width: 460px;
+        }
+
+        .valeurs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .valeur-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 24px;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        .valeur-card:hover {
+            border-color: rgba(155,77,255,0.4);
+            background: rgba(155,77,255,0.06);
+        }
+
+        .valeur-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(155,77,255,0.3), rgba(255,0,255,0.15));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+
+        .valeur-card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .valeur-card p {
+            font-size: 12.5px;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.6;
+        }
+
+        /* ===== POURQUOI NOUS ===== */
+        .pourquoi {
+            padding: 120px 0;
+            background: var(--bg-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pourquoi::after {
+            content: '';
+            position: absolute;
+            bottom: -200px; left: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(255,0,255,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .pourquoi-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .pourquoi-header .section-tag {
+            justify-content: center;
+        }
+        .pourquoi-header .section-tag::before { display: none; }
+        .pourquoi-header h2 {
+            font-size: 46px;
+            font-weight: 700;
+            color: white;
+        }
+        .pourquoi-header h2 span { color: var(--accent); }
+
+        .pourquoi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .pourquoi-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 420px;
+            cursor: pointer;
+        }
+
+        .pourquoi-card-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s ease;
+        }
+        .pourquoi-card:hover .pourquoi-card-bg { transform: scale(1.08); }
+
+        .pourquoi-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.4) 50%, transparent 100%);
+            z-index: 1;
+        }
+
+        .pourquoi-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            z-index: 2;
+        }
+
+        .pourquoi-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.1);
+            line-height: 1;
+            margin-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .pourquoi-card-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .pourquoi-card-content p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+            max-width: 280px;
+        }
+
+        .pourquoi-tag {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        /* ===== TÉMOIGNAGES ===== */
+        .temoignages {
+            padding: 120px 0;
+            background: #0d0d18;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .temoignages::before {
+            content: '"';
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            font-size: 300px;
+            font-weight: 700;
+            color: rgba(155,77,255,0.04);
+            line-height: 1;
+            font-family: Georgia, serif;
+            pointer-events: none;
+        }
+
+        .temoignages-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        .temoignages-header .section-tag {
+            justify-content: center;
+        }
+        .temoignages-header .section-tag::before { display: none; }
+        .temoignages-header h2 {
+            font-size: 46px;
+            font-weight: 700;
+            color: white;
+        }
+        .temoignages-header h2 span { color: var(--accent); }
+
+        .temoignages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .temoignage-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 36px;
+            position: relative;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .temoignage-card:hover {
+            border-color: rgba(155,77,255,0.35);
+            transform: translateY(-6px);
+        }
+
+        .temoignage-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            right: 28px;
+            font-size: 80px;
+            color: rgba(255,0,255,0.12);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .stars {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 20px;
+        }
+        .stars i { color: var(--accent); font-size: 13px; }
+
+        .temoignage-card blockquote {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            font-style: italic;
+        }
+
+        .temoignage-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(155,77,255,0.4);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .author-info h5 {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+        .author-info span {
+            font-size: 12px;
+            color: var(--primary);
+        }
+
+        /* ===== CTA FINAL ===== */
+        .cta-section {
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .cta-section-bg {
+            position: absolute;
+            inset: 0;
+            background: url('VOTRE_PHOTO_CTA.jpg') no-repeat center center; /* ← ton image */
+            background-size: cover;
+            z-index: 0;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(10,10,15,0.82);
+            z-index: 1;
+        }
+
+        .cta-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-section h2 {
+            font-size: 54px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.15;
+        }
+        .cta-section h2 span { color: var(--accent); }
+
+        .cta-section p {
+            font-size: 17px;
+            color: rgba(255,255,255,0.6);
+            max-width: 500px;
+            margin: 0 auto 44px;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-cta {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: opacity 0.3s, transform 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-primary-cta:hover { opacity: 0.88; transform: translateY(-2px); }
+
+        .btn-outline-cta {
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: border-color 0.3s, background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-outline-cta:hover { border-color: var(--primary); background: rgba(155,77,255,0.1); }
+
+        /* ===== FOOTER ===== */
+        footer { padding: 80px 0 30px; background: linear-gradient(to bottom, #0a0a0f, #1a0a2e); border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 50px; margin-bottom: 60px; }
+        .footer-logo-desc p { font-size: 13px; color: var(--text-gray); margin-top: 20px; max-width: 250px; line-height: 1.7; }
+        .footer-col h4 { font-size: 14px; margin-bottom: 22px; color: var(--text-light); }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { font-size: 13px; color: var(--text-gray); transition: color 0.3s; }
+        .footer-col ul li a:hover { color: var(--primary); }
+        .footer-contact p { font-size: 13px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .social-icons { display: flex; gap: 20px; }
+        .social-icons a { color: var(--text-gray); font-size: 18px; transition: color 0.3s; }
+        .social-icons a:hover { color: var(--accent); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 28px; text-align: center; font-size: 12px; color: var(--text-gray); }
+
+        /* ===== RESPONSIVE TABLET ===== */
+        @media (max-width: 900px) {
+            .nav-links, .btn-follow { display: none; }
+            .hamburger { display: flex; }
+            .mobile-menu { display: flex; }
+            .container { padding: 0 28px; }
+
+            .hero-about h1 { font-size: 52px; }
+            .hero-about-desc { font-size: 16px; }
+
+            .valeurs-layout { grid-template-columns: 1fr; gap: 50px; }
+            .valeurs-image { height: 400px; }
+            .valeurs-text h2 { font-size: 36px; }
+
+            .pourquoi-grid { grid-template-columns: 1fr; gap: 20px; }
+            .pourquoi-card { height: 320px; }
+            .pourquoi-header h2 { font-size: 36px; }
+
+            .temoignages-grid { grid-template-columns: 1fr; gap: 20px; }
+            .temoignages-header h2 { font-size: 36px; }
+
+            .cta-section h2 { font-size: 40px; }
+
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 35px; }
+            .footer-logo-desc { grid-column: 1 / -1; }
+        }
+
+        /* ===== RESPONSIVE MOBILE ===== */
+        @media (max-width: 600px) {
+            .container { padding: 0 20px; }
+            .hero-about h1 { font-size: 38px; }
+            .hero-about-desc { font-size: 14px; }
+            .valeurs { padding: 80px 0; }
+            .valeurs-grid { grid-template-columns: 1fr; }
+            .valeurs-img-overlay { display: none; }
+            .pourquoi { padding: 80px 0; }
+            .temoignages { padding: 80px 0; }
+            .cta-section { padding: 80px 0; }
+            .cta-section h2 { font-size: 30px; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            footer { padding: 60px 0 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo"><div class="logo-box"><img src="LOGO.png" alt="RL Studio Logo"></div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="imprimerie.html">Imprimerie</a></li>
+                <li><a href="photographie.html">Photographie</a></li>
+                <li><a href="vidéographie.html">Vidéographie</a></li>
+                <li><a href="articles.html">Articles</a></li>
+             
+                <li><a href="apropos.html" class="active">À propos</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+            </ul>
+            <a href="#" class="btn-follow"><i class="fab fa-instagram"></i> Nous suivre</a>
+            <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- ==================== MOBILE MENU ==================== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" id="mobileClose" aria-label="Fermer le menu"><span></span><span></span></button>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="imprimerie.html">Imprimerie</a></li>
+            <li><a href="photographie.html">Photographie</a></li>
+          <li><a href="vidéographie.html">Vidéographie</a></li>
+                <li><a href="articles.html">Articles</a></li>
+            <li><a href="a propos.html" class="active">À propos</a></li>
+            <li><a href="contacts.html">Contact</a></li>
+        </ul>
+        <div class="mobile-follow"><a href="#"><i class="fab fa-instagram"></i> Nous suivre</a></div>
+        <div class="mobile-social">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+
+    <!-- ==================== HERO IMMERSIF ==================== -->
+    <section class="hero-about">
+        <div class="hero-about-bg" id="heroBg"></div>
+        <div class="container">
+            <p class="hero-about-label reveal delay-1">RL_STUDIORLK</p>
+            <h1 class="reveal delay-2">L'art de voir,<br>le talent de <span>capturer.</span></h1>
+            <p class="hero-about-desc reveal delay-3">
+                Nous sommes un studio créatif basé à Rabat, passionné par la photographie, la mise en valeur d'articles et la couverture d'événements. Chaque image que nous créons raconte une histoire unique.
+            </p>
+            <div class="hero-scroll reveal delay-4">
+                <div class="scroll-line"></div>
+                Découvrir
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== NOS VALEURS ==================== -->
+    <section class="valeurs">
+        <div class="container">
+            <div class="valeurs-layout">
+                <!-- Images -->
+                <div class="valeurs-image reveal from-left delay-1">
+                    <div class="valeurs-accent-line"></div>
+                    <img src="pho.jpg" alt="Studio RL" class="valeurs-img-main">
+                    <!-- ↑ remplace par ton image -->
+                    <img src="ou.jpg" alt="Travail en studio" class="valeurs-img-overlay">
+                    <!-- ↑ remplace par ton image -->
+                </div>
+                <!-- Texte + cartes valeurs -->
+                <div class="valeurs-text">
+                    <p class="section-tag reveal delay-1">Nos valeurs</p>
+                    <h2 class="reveal delay-2">Ce qui nous <span>définit</span></h2>
+                    <p class="reveal delay-3">Chez RL_StudioRLK, chaque projet est abordé avec une attention particulière aux détails, une passion sincère pour l'image et un engagement total envers nos clients.</p>
+                    <div class="valeurs-grid">
+                        <div class="valeur-card reveal delay-2">
+                            <div class="valeur-icon"><i class="fas fa-eye"></i></div>
+                            <h4>Vision artistique</h4>
+                            <p>Chaque angle, chaque lumière est pensée pour révéler le meilleur de votre sujet.</p>
+                        </div>
+                        <div class="valeur-card reveal delay-3">
+                            <div class="valeur-icon"><i class="fas fa-heart"></i></div>
+                            <h4>Passion</h4>
+                            <p>La photographie est avant tout une histoire d'amour avec l'instant présent.</p>
+                        </div>
+                        <div class="valeur-card reveal delay-4">
+                            <div class="valeur-icon"><i class="fas fa-handshake"></i></div>
+                            <h4>Confiance</h4>
+                            <p>Une relation transparente et honnête avec chaque client, du premier contact à la livraison.</p>
+                        </div>
+                        <div class="valeur-card reveal delay-5">
+                            <div class="valeur-icon"><i class="fas fa-star"></i></div>
+                            <h4>Excellence</h4>
+                            <p>Des standards élevés dans chaque prestation, pour des résultats qui dépassent vos attentes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== POURQUOI NOUS CHOISIR ==================== -->
+    <section class="pourquoi">
+        <div class="container">
+            <div class="pourquoi-header">
+                <p class="section-tag reveal delay-1">Pourquoi nous choisir</p>
+                <h2 class="reveal delay-2">Ce qui nous rend <span>différents</span></h2>
+            </div>
+            <div class="pourquoi-grid">
+
+                <div class="pourquoi-card reveal delay-1">
+                    <div class="pourquoi-card-bg" style="background-image: url('VOTRE_PHOTO_POURQUOI_1.jpg'); background-color: #1a1a2e;"></div>
+                    <!-- ↑ remplace par ton image -->
+                    <div class="pourquoi-card-content">
+                        <span class="pourquoi-tag">Expertise</span>
+                        <div class="pourquoi-number">01</div>
+                        <h3>Équipement professionnel</h3>
+                        <p>Matériel haut de gamme pour des résultats nets, précis et riches en détails dans toutes les conditions.</p>
+                    </div>
+                </div>
+
+                <div class="pourquoi-card reveal delay-2">
+                    <div class="pourquoi-card-bg" style="background-image: url('VOTRE_PHOTO_POURQUOI_2.jpg'); background-color: #1a0a2e;"></div>
+                    <!-- ↑ remplace par ton image -->
+                    <div class="pourquoi-card-content">
+                        <span class="pourquoi-tag">Créativité</span>
+                        <div class="pourquoi-number">02</div>
+                        <h3>Approche sur-mesure</h3>
+                        <p>Chaque projet est unique. Nous adaptons notre style et notre approche à vos besoins spécifiques.</p>
+                    </div>
+                </div>
+
+                <div class="pourquoi-card reveal delay-3">
+                    <div class="pourquoi-card-bg" style="background-image: url('VOTRE_PHOTO_POURQUOI_3.jpg'); background-color: #0a1a1e;"></div>
+                    <!-- ↑ remplace par ton image -->
+                    <div class="pourquoi-card-content">
+                        <span class="pourquoi-tag">Rapidité</span>
+                        <div class="pourquoi-number">03</div>
+                        <h3>Livraison rapide</h3>
+                        <p>Vos photos retouchées livrées dans les délais convenus, sans compromis sur la qualité.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TÉMOIGNAGES ==================== -->
+    <section class="temoignages">
+        <div class="container">
+            <div class="temoignages-header">
+                <p class="section-tag reveal delay-1">Témoignages</p>
+                <h2 class="reveal delay-2">Ce que disent nos <span>clients</span></h2>
+            </div>
+            <div class="temoignages-grid">
+
+                <div class="temoignage-card reveal delay-1">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <blockquote>
+                        "RL_StudioRLK a su capturer l'essence de notre mariage avec une sensibilité rare. Chaque photo est un souvenir inoubliable. Nous recommandons sans hésitation !"
+                    </blockquote>
+                    <div class="temoignage-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h5>Jecolia & Sublime</h5>
+                            <span>Mariage — Rabat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="temoignage-card reveal delay-2">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <blockquote>
+                        "Shooting de ma soutenance absolument parfait. Les photos sont professionnelles, le cadrage est superbe. Un travail soigné du début à la fin."
+                    </blockquote>
+                    <div class="temoignage-author">
+                        <div class="author-avatar">S</div>
+                        <div class="author-info">
+                            <h5>Merdi M</h5>
+                            <span>Soutenance — Rabat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="temoignage-card reveal delay-3">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <blockquote>
+                        "Le shooting de nos produits a dépassé toutes nos attentes. Les images mettent parfaitement en valeur notre collection. Merci pour votre créativité !"
+                    </blockquote>
+                    <div class="temoignage-author">
+                        <div class="author-avatar">Y</div>
+                        <div class="author-info">
+                            <h5>Youssef M.</h5>
+                            <span>Photo produits — Marrakech</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CTA FINAL ==================== -->
+    <section class="cta-section">
+        <div class="cta-section-bg"></div>
+        <div class="container">
+            <h2 class="reveal delay-1">Prêt à créer quelque<br>chose <span>d'exceptionnel ?</span></h2>
+            <p class="reveal delay-2">Contactez-nous pour discuter de votre projet. Nous serons ravis de donner vie à votre vision.</p>
+            <div class="cta-buttons reveal delay-3">
+                <a href="contacts.html" class="btn-primary-cta">
+                    <i class="fas fa-paper-plane"></i> Nous contacter
+                </a>
+                <a href="photographie.html" class="btn-outline-cta">
+                    <i class="fas fa-images"></i> Voir nos services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo-desc">
+                    <div class="logo"><div class="logo-box"><img src="LOGO.png" alt="RL Studio Logo"></div></div>
+                    <p>RL_StudioRLK - Capturez l'instant, partagez l'émotion.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="articles.html">Articles</a></li>
+                     
+                    
+                        <li><a href="a propos.html">À propos</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Catégories</h4>
+                    <ul>
+                        <li><a href="photographie.html">Photographie</a></li>
+                        <li><a href="imprimerie.html">Imprimerie</a></li>
+                        <li><a href="#">Événements</a></li>
+                        <li><a href="#">Tutoriels</a></li>
+                        <li><a href="#">Actualités</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Suivez-nous</h4>
+                    <div class="social-icons" style="margin-bottom:22px;">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> Rabat, Maroc</p>
+                        <p><i class="far fa-envelope"></i> contact@rlstudiorlk.com</p>
+                        <p><i class="fas fa-phone-alt"></i> +212 62 44 52 70 1</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">&copy; 2025 RL_StudioRLK. Tous droits réservés.</div>
+        </div>
+    </footer>
+
+    <script>
+        /* ===== HAMBURGER ===== */
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        function openMenu(){ hamburger.classList.add('open'); mobileMenu.classList.add('open'); document.body.style.overflow='hidden'; }
+        function closeMenu(){ hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); document.body.style.overflow=''; }
+        hamburger.addEventListener('click', openMenu);
+        mobileClose.addEventListener('click', closeMenu);
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMenu));
+
+        /* ===== SCROLL REVEAL ===== */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        /* ===== HERO ANIMATIONS ===== */
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.hero-about .reveal').forEach(el => el.classList.add('visible'));
+            document.getElementById('heroBg').classList.add('loaded');
+        });
+
+        /* ===== PARALLAX HERO ===== */
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const heroBg = document.getElementById('heroBg');
+            if (heroBg && scrollY < window.innerHeight) {
+                heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
