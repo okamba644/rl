@@ -338,7 +338,7 @@
 
         <!-- Vidéo droite 65% ← remplaceTA_VIDEO.mp4 par ton fichier -->
         <div class="page-header-video">
-            <video id="headerVideo" autoplay muted loop playsinline>
+            <video id="headerVideo" autoplay muted loop playsinline preload="auto">
                 <source src="k.mp4" type="video/mp4">
             </video>
         </div>
@@ -572,6 +572,18 @@
                 firstGroup.classList.add('open');
                 const firstSub = firstGroup.querySelector('.sub-item');
                 if(firstSub) selectSub(firstSub.dataset.group, firstSub.dataset.sub);
+            }
+
+            /* Force autoplay on load */
+            if (headerVideo) {
+                headerVideo.muted = true;
+                headerVideo.playsInline = true;
+                headerVideo.setAttribute('playsinline', '');
+                headerVideo.setAttribute('muted', '');
+                headerVideo.setAttribute('autoplay', '');
+                headerVideo.play().catch(() => {
+                    /* some browsers block auto play until user interaction */
+                });
             }
 
             /* Scroll reveal */
