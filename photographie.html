@@ -378,6 +378,14 @@
             "RL819-7.jpg","RL819-74.jpg","RL819.jpg","RLSTUDIO_-23.jpg","RLSTUDIO_-24.jpg","RLSTUDIO_-39.jpg","RLSTUDIO_-59.jpg"
         ];
 
+        const touristiqueGalleryPhotos = [
+            "RL819-10.jpg","RL819-117.jpg","RL819-123.jpg","RL819-124.jpg","RL819-144.jpg","RL819-160.jpg","RL819-176.jpg","RL819-38.jpg","RL819-44.jpg","RL819-45.jpg","RL819-47.jpg","RL819-82.jpg","RL819-91.jpg"
+        ];
+
+        const culturelGalleryPhotos = [
+            "IMG_0154.JPG","IMG_0168.JPG","IMG_0173.JPG","IMG_0181.JPG","IMG_0192.JPG","IMG_0212.JPG","IMG_0246.JPG","IMG_0352.JPG","IMG_0359.JPG","IMG_0361.JPG","IMG_0373.JPG","IMG_0379.JPG","IMG_0382.JPG","IMG_0389.JPG"
+        ];
+
         const catalog = {
             evenements: {
                 label: "Événements", icon: "fa-calendar-check",
@@ -401,16 +409,8 @@
             specialite: {
                 label: "Spécialités", icon: "fa-star",
                 subs: {
-                    "touristique": { label: "Photo touristique", icon: "fa-map-marked-alt", products: [
-                        { name: "Séance souvenir au Maroc", desc: "Balade photo dans les médinas ou sites naturels, 30 photos retouchées, 1h.", price: "400 DH", unit: "/ séance", image: "photos/tourisme1.jpg" },
-                        { name: "Pack touriste 2h", desc: "Itinéraire personnalisé, 60 photos HD, galerie partagée en ligne.", price: "650 DH", unit: "/ séance", image: "photos/tourisme2.jpg" },
-                        { name: "Reportage voyage sur-mesure", desc: "Accompagnement lors de votre séjour, reportage complet, demi-journée.", price: "1 200 DH", unit: "/ demi-journée", image: "photos/tourisme3.jpg" }
-                    ]},
-                    "culturel": { label: "Photo culturel", icon: "fa-landmark", products: [
-                        { name: "Reportage événement culturel", desc: "Concert, exposition, conférence — couverture complète, 150 photos HD.", price: "1 100 DH", unit: "/ forfait", image: "photos/culture1.jpg" },
-                        { name: "Séance patrimoine & architecture", desc: "Mise en valeur de lieux historiques ou culturels, 40 photos.", price: "700 DH", unit: "/ séance", image: "photos/culture2.jpg" },
-                        { name: "Documentaire photo", desc: "Projet photo narratif sur une thématique culturelle, sur-mesure.", price: "Sur devis", unit: "", image: "photos/culture3.jpg" }
-                    ]}
+                    "touristique": { label: "Photo touristique", icon: "fa-map-marked-alt", products: touristiqueGalleryPhotos.map((file) => ({ name: "Photo touristique", desc: "Galerie touristique", price: "", unit: "", image: "Photo Tourristique/" + file })) },
+                    "culturel": { label: "Photo culturel", icon: "fa-landmark", products: culturelGalleryPhotos.map((file) => ({ name: "Photo culturel", desc: "Galerie culturelle", price: "", unit: "", image: "Photos Culturel/" + file })) }
                 }
             }
         };

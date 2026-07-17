@@ -381,7 +381,7 @@
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
             cursor: pointer;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             gap: 10px;
@@ -449,7 +449,7 @@
         .footer-col ul li { margin-bottom: 10px; }
         .footer-col ul li a { font-size: 13px; color: var(--text-gray); transition: color 0.3s; }
         .footer-col ul li a:hover { color: var(--primary); }
-        .footer-contact-info p { font-size: 13px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .footer-contact p { font-size: 13px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
         .footer-social, .social-icons { display: flex; gap: 18px; align-items: center; margin-top: 4px; }
         .footer-social a, .social-icons a { color: var(--text-gray); font-size: 18px; transition: color 0.3s, background 0.2s; display: inline-flex; align-items: center; justify-content: center; padding: 6px; border-radius: 8px; }
         .footer-social a:hover, .social-icons a:hover { color: var(--accent); background: rgba(155,77,255,0.06); }
@@ -638,9 +638,7 @@
                         </div>
 
                         <!-- Bouton envoyer -->
-                        <button class="btn-send" id="btnSend">
-                            
-                        </button>
+                        <button class="btn-send" id="btnSend">Envoyer</button>
 
                         <div class="form-divider"></div>
 
@@ -666,29 +664,26 @@
     <footer>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-logo-desc reveal delay-1">
+                <div class="footer-logo-desc">
                     <div class="logo"><div class="logo-box"><img src="LOGO.png" alt="RL Studio Logo"></div></div>
-                    <p>RL_StudioRLK, Capturez l'instant, partagez l'émotion.</p>
+                    <p>RL_StudioRLK - Capturez l'instant, partagez l'émotion.</p>
                 </div>
-                <div class="footer-col reveal delay-2">
+                <div class="footer-col">
                     <h4>Navigation</h4>
                     <ul>
                         <li><a href="index.html">Accueil</a></li>
-                        <li><a href="imprimerie.html">Imprimerie</a></li>
-                        <li><a href="photographie.html">Photographie</a></li>
-                        <li><a href="vidéographie.html">Vidéographie</a></li>
                         <li><a href="articles.html">Articles</a></li>
                         <li><a href="a propos.html">À propos</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
+                        <li><a href="contacts.html">Contact</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-col reveal delay-4">
+                <div class="footer-col">
                     <h4>Suivez-nous</h4>
                     <div class="social-icons" style="margin-bottom:22px;">
-                        <a href="https://www.instagram.com/rl_studiorlk/" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/Rl819" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/rl_studiorlk/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/rlstudiorlk" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                     <div class="footer-contact">
                         <p><i class="fas fa-map-marker-alt"></i> Rabat, Maroc</p>
@@ -697,9 +692,7 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom reveal from-bottom delay-2">
-                &copy; 2025 RL_StudioRLK. Tous droits réservés.
-            </div>
+            <div class="footer-bottom">&copy; 2025 RL_StudioRLK. Tous droits réservés.</div>
         </div>
     </footer>
 
