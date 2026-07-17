@@ -142,7 +142,6 @@
             background: #ffffff;
         }
 
-        /* Animation croix */
         .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
         .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -168,7 +167,6 @@
             pointer-events: all;
         }
 
-        /* Fond décoratif mobile menu */
         .mobile-menu::before {
             content: '';
             position: absolute;
@@ -210,7 +208,6 @@
             transform: translateY(0);
         }
 
-        /* Délais cascade sur les liens mobile */
         .mobile-menu.open .mobile-nav-links li:nth-child(1) { transition-delay: 0.1s; }
         .mobile-menu.open .mobile-nav-links li:nth-child(2) { transition-delay: 0.17s; }
         .mobile-menu.open .mobile-nav-links li:nth-child(3) { transition-delay: 0.24s; }
@@ -301,7 +298,7 @@
         .social-icons a { color: var(--text-gray); font-size: 18px; transition: color 0.3s; }
         .social-icons a:hover { color: var(--accent); }
 
-        .hero-image { flex: 1; position: relative; display: flex; justify-content: flex-end; }
+        .hero-image { flex: 1; position: relative; display: flex; flex-direction: column; align-items: flex-end; }
 
         .hero-image-wrapper {
             position: relative;
@@ -309,14 +306,150 @@
             border: 3px solid var(--primary);
             border-radius: 10px;
             display: flex; justify-content: center; align-items: center;
+            overflow: hidden;
         }
         .hero-image-wrapper::before, .hero-image-wrapper::after {
-            content: ''; position: absolute; background: var(--primary); height: 2px; width: 40px;
+            content: ''; position: absolute; background: var(--primary); height: 2px; width: 40px; z-index: 5;
         }
         .hero-image-wrapper::before { left: -55px; }
         .hero-image-wrapper::after { right: -55px; }
 
-        .hero-main-img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; background: rgba(0,0,0,0.3); }
+        .hero-image-wrapper img { width: 100%; height: 100%; object-fit: cover; object-position: center; position: relative; z-index: 2; }
+
+        /* Balayage lumineux qui traverse l'image à l'entrée de chaque slide */
+        .hero-image-wrapper .hero-shine {
+            position: absolute;
+            inset: 0;
+            z-index: 6;
+            pointer-events: none;
+            background: linear-gradient(115deg, transparent 42%, rgba(255,255,255,0.55) 50%, transparent 58%);
+            transform: translateX(-130%);
+        }
+
+        /* Flash / onde de choc derrière l'image, façon "explosion" lumineuse */
+        .hero-image-wrapper .hero-burst {
+            position: absolute;
+            inset: -30%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,0,255,0.65) 0%, rgba(155,77,255,0.35) 35%, transparent 70%);
+            z-index: 1;
+            opacity: 0;
+            transform: scale(0.3);
+            pointer-events: none;
+        }
+
+        /* ===== CARROUSEL HERO COMPLET =====
+           Toutes les slides sont empilées dans la même cellule grid (technique de
+           superposition), ce qui permet à l'ensemble (texte + image) de garder sa
+           taille naturelle pendant que la transition se fait entre les slides. */
+        .hero-carousel-outer {
+            display: grid;
+            width: 100%;
+        }
+        .hero-carousel-outer .hero-content {
+            grid-column: 1;
+            grid-row: 1;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .hero-carousel-outer .hero-content.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Slide qui ENTRE : zoom avant + flou qui se dissipe, avec un léger rebond */
+        .hero-carousel-outer .hero-content.entering {
+            animation: heroContentIn 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes heroContentIn {
+            0%   { opacity: 0; transform: scale(1.08); filter: blur(6px); }
+            55%  { opacity: 1; }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+
+        /* Slide qui SORT : recul + flou + fondu rapide, comme aspirée vers l'arrière */
+        .hero-carousel-outer .hero-content.leaving {
+            animation: heroContentOut 0.55s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+        }
+        @keyframes heroContentOut {
+            0%   { opacity: 1; transform: scale(1); filter: blur(0); }
+            100% { opacity: 0; transform: scale(0.92); filter: blur(5px); }
+        }
+
+        /* Cascade du texte : chaque ligne arrive avec son propre délai */
+        .hero-content.entering .hero-text > * {
+            opacity: 0;
+            animation: heroTextIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .hero-content.entering .hero-text > *:nth-child(1) { animation-delay: 0.05s; }
+        .hero-content.entering .hero-text > *:nth-child(2) { animation-delay: 0.13s; }
+        .hero-content.entering .hero-text > *:nth-child(3) { animation-delay: 0.21s; }
+        .hero-content.entering .hero-text > *:nth-child(4) { animation-delay: 0.29s; }
+        .hero-content.entering .hero-text > *:nth-child(5) { animation-delay: 0.37s; }
+        .hero-content.entering .hero-text > *:nth-child(6) { animation-delay: 0.45s; }
+        @keyframes heroTextIn {
+            0%   { opacity: 0; transform: translateY(22px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Titre : léger effet de "pop" sur l'entrée pour plus de punch */
+        .hero-content.entering .hero-text h1 {
+            animation-name: heroTitleIn;
+        }
+        @keyframes heroTitleIn {
+            0%   { opacity: 0; transform: translateY(22px) scale(0.94); }
+            65%  { opacity: 1; transform: translateY(0) scale(1.02); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Déclenchement du balayage lumineux et du flash à l'entrée de l'image */
+        .hero-content.entering .hero-shine {
+            animation: heroShineSweep 0.9s ease-out 0.15s forwards;
+        }
+        @keyframes heroShineSweep {
+            0%   { transform: translateX(-130%); }
+            100% { transform: translateX(130%); }
+        }
+        .hero-content.entering .hero-burst {
+            animation: heroBurstFlash 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes heroBurstFlash {
+            0%   { opacity: 0.9; transform: scale(0.3); }
+            60%  { opacity: 0.4; }
+            100% { opacity: 0; transform: scale(1.9); }
+        }
+        .hero-content.entering .hero-image-wrapper img {
+            animation: heroImageIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes heroImageIn {
+            0%   { opacity: 0; transform: scale(1.18) rotate(-1.2deg); }
+            60%  { opacity: 1; }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        /* Petits points indicateurs sous le bloc hero */
+        .hero-carousel-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .hero-carousel-dots button {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.25);
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .hero-carousel-dots button.active {
+            background: var(--accent);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px 2px rgba(255,0,255,0.55);
+        }
+
 
         /* ===== ABOUT ===== */
         .about { background: white; color: #333; padding: 100px 0; }
@@ -426,9 +559,6 @@
 
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 28px; text-align: center; font-size: 12px; color: var(--text-gray); }
 
-        /* ===================================================== */
-        /*                  RESPONSIVE — TABLET (≤900px)         */
-        /* ===================================================== */
         @media (max-width: 900px) {
             .nav-links, .btn-follow { display: none; }
             .hamburger { display: flex; }
@@ -436,18 +566,16 @@
 
             .container { padding: 0 28px; }
 
-            /* Hero */
             .hero-content { flex-direction: column; text-align: center; gap: 50px; }
             .hero-text { max-width: 100%; }
             .hero-text h1 { font-size: 52px; }
             .hero-slogan { font-size: 34px; }
             .hero-divider { margin-left: auto; margin-right: auto; }
             .social-icons { justify-content: center; }
-            .hero-image { justify-content: center; width: 100%; }
+            .hero-image { justify-content: center; width: 100%; align-items: center; }
             .hero-image-wrapper { width: 100%; max-width: 420px; height: 320px; }
             .hero-image-wrapper::before, .hero-image-wrapper::after { display: none; }
 
-            /* About */
             .about-content { flex-direction: column; gap: 60px; }
             .about-images { justify-content: center; min-height: 350px; }
             .main-about-img { width: 280px; height: 360px; }
@@ -457,24 +585,18 @@
             .about-text h2 { font-size: 32px; }
             .services { grid-template-columns: repeat(3,1fr); }
 
-            /* Articles */
             .article-grid { grid-template-columns: repeat(2,1fr); }
             .article-img { height: 220px; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
 
-            /* Events */
             .events-slider { flex-direction: column; }
             .slider-arrow { display: none; }
             .event-card { width: 100%; }
 
-            /* Footer */
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 35px; }
             .footer-logo-desc { grid-column: 1 / -1; }
         }
 
-        /* ===================================================== */
-        /*                  RESPONSIVE — MOBILE (≤600px)         */
-        /* ===================================================== */
         @media (max-width: 600px) {
             .hero { padding-top: 110px; padding-bottom: 70px; }
             .container { padding: 0 20px; }
@@ -484,7 +606,6 @@
             .hero-text p { font-size: 14px; }
             .hero-image-wrapper { height: 260px; }
 
-            /* About */
             .about { padding: 70px 0 90px; }
             .about-content { gap: 50px; }
             .about-images { min-height: 300px; }
@@ -495,19 +616,16 @@
             .service-item { display: flex; align-items: flex-start; gap: 15px; }
             .service-item > div { flex: 1; }
 
-            /* Articles */
             .articles { padding: 70px 0; }
             .article-grid { grid-template-columns: 1fr; }
             .article-img { height: 240px; }
 
-            /* Events */
             .events { padding: 70px 0; }
             .event-card { flex-direction: column; gap: 15px; }
             .event-date-box { align-self: flex-start; min-width: auto; display: flex; gap: 6px; align-items: baseline; padding: 8px 14px; }
             .event-date-box .day { font-size: 18px; }
             .event-date-box .month { font-size: 12px; }
 
-            /* Footer */
             .footer-grid { grid-template-columns: 1fr; gap: 30px; }
             .footer-logo-desc { grid-column: 1; }
             footer { padding: 60px 0 25px; }
@@ -527,20 +645,17 @@
             <ul class="nav-links">
                 <li><a href="#" class="active">Accueil</a></li>
                 <li><a href="imprimerie.html">Imprimerie</a></li>
-
                  <li><a href="photographie.html">Photographie</a></li>
                   <li><a href="vidéographie.html">Vidéographie</a></li>
                   <li><a href="articles.html">Articles</a></li>
-               
                 <li><a href="a propos.html">À propos</a></li>
-                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
             </ul>
 
             <a href="https://www.instagram.com/rl_studiorlk/" class="btn-follow">
                 <i class="fab fa-instagram"></i> Nous suivre
             </a>
 
-            <!-- Hamburger button -->
             <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu">
                 <span></span>
                 <span></span>
@@ -561,20 +676,17 @@
             <li><a href="photographie.html">Photographie</a></li>
             <li><a href="videographie.html">Vidéographie</a></li>
             <li><a href="articles.html">Articles</a></li>
-           
-           
             <li><a href="a propos.html">À propos</a></li>
-            <li><a href="contacts.html">Contact</a></li>
+            <li><a href="contacts.html">Contacts</a></li>
         </ul>
         <div class="mobile-follow">
-            <a href="#">
+            <a href="https://www.instagram.com/rl_studiorlk/" target="_blank">
                 <i class="fab fa-instagram"></i> Nous suivre
             </a>
         </div>
         <div class="mobile-social">
             <a href="https://www.instagram.com/rl_studiorlk/" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.facebook.com/Rl819"><i class="fab fa-facebook-f"></i></a>
-          
             <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
     </div>
@@ -582,25 +694,15 @@
     <!-- ==================== HERO ==================== -->
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h4 class="reveal delay-1">RL_STUDIORLK</h4>
-                    <h1 class="reveal delay-2"><span class="rl-accent">RL</span> Studio</h1>
-                    <div class="hero-divider reveal delay-3"></div>
-                    <p class="hero-slogan reveal delay-4">Une image qui <span>vous représente</span></p>
-                    <div class="hero-divider reveal delay-5"></div>
-                    <div class="social-icons reveal delay-6">
-                        <a href="https://www.instagram.com/rl_studiorlk/" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/Rl819" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="hero-image reveal from-right delay-3">
-                    <div class="hero-image-wrapper">
-                        <img src="LOGO.png" class="hero-main-img" alt="RL Studio">
-                    </div>
-                </div>
-            </div>
+            <!-- =====================================================================
+                 CARROUSEL HERO COMPLET — chaque slide = texte (label, titre, slogan)
+                 + image, l'ensemble considéré comme UN SEUL bloc. Toutes les 3 secondes,
+                 le bloc entier disparaît en fondu et un autre bloc complet le remplace.
+                 ⬇️ Modifie le tableau "heroFullSlides" dans le <script> plus bas pour
+                 changer les textes et les chemins d'images de chaque slide.
+            ===================================================================== -->
+            <div class="hero-carousel-outer" id="heroCarouselOuter"></div>
+            <div class="hero-carousel-dots" id="heroCarouselDots"></div>
         </div>
     </section>
 
@@ -733,29 +835,18 @@
 
                 <div class="event-card reveal delay-3">
                     <div class="event-date-box">
-                        <span class="day">23</span>
-                        <span class="month">SEP.</span>
+                        <span class="day">24</span>
+                        <span class="month">Oct.</span>
                     </div>
                     <div class="event-details">
                         <h3>Psaumes d'Eden</h3>
                         <div class="event-location"><i class="fas fa-map-marker-alt"></i> Rabat, Maroc</div>
-                        <p>2e Édition du concert Psaumes d'Eden.</p>
+                        <p>1e Édition du concert Psaumes d'Eden.</p>
                         <a href="#" class="btn-sm-white">En savoir plus</a>
                     </div>
                 </div>
 
-                <div class="event-card reveal delay-4">
-                    <div class="event-date-box">
-                        <span class="day">15</span>
-                        <span class="month">NOV</span>
-                    </div>
-                    <div class="event-details">
-                        <h3>Atelier de formation</h3>
-                        <div class="event-location"><i class="fas fa-map-marker-alt"></i> Rabat, Maroc</div>
-                        <p>Initiation et perfectionnement aux techniques de photographie dans un cadre pratique et convivial.</p>
-                        <a href="#" class="btn-sm-white">En savoir plus</a>
-                    </div>
-                </div>
+                
 
                 <div class="slider-arrow reveal from-right delay-5" style="background:rgba(255,255,255,0.08);"><i class="fas fa-chevron-right"></i></div>
             </div>
@@ -773,30 +864,21 @@
                 <div class="footer-col reveal delay-2">
                     <h4>Navigation</h4>
                     <ul>
-                        <li><a href="#">Accueil</a></li>
-                        <li><a href="#">Articles</a></li>
-                        <li><a href="#">Publications</a></li>
-                        <li><a href="#evenements">Événements</a></li>
-                        <li><a href="#">À propos</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="imprimerie.html">Imprimerie</a></li>
+                        <li><a href="photographie.html">Photographie</a></li>
+                        <li><a href="vidéographie.html">Vidéographie</a></li>
+                        <li><a href="articles.html">Articles</a></li>
+                        <li><a href="a propos.html">À propos</a></li>
+                        <li><a href="contacts.html">Contacts</a></li>
                     </ul>
                 </div>
-                <div class="footer-col reveal delay-3">
-                    <h4>Catégories</h4>
-                    <ul>
-                        <li><a href="#">Photographie</a></li>
-                        <li><a href="#">Produits</a></li>
-                        <li><a href="#">Événements</a></li>
-                        <li><a href="#">Tutoriels</a></li>
-                        <li><a href="#">Actualités</a></li>
-                    </ul>
-                </div>
+
                 <div class="footer-col reveal delay-4">
                     <h4>Suivez-nous</h4>
                     <div class="social-icons" style="margin-bottom:22px;">
                         <a href="https://www.instagram.com/rl_studiorlk/" target="_blank"><i class="fab fa-instagram"></i></a>
                         <a href="https://www.facebook.com/Rl819" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                      
                         <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
                     </div>
                     <div class="footer-contact">
@@ -835,6 +917,154 @@
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', closeMenu);
         });
+
+        /* =====================================================================
+           CARROUSEL HERO COMPLET
+           -----------------------------------------------------------------
+           Chaque objet ci-dessous = UNE slide entière (label + titre + slogan
+           + image). Le tout apparaît/disparaît ensemble, comme un seul bloc.
+           ⬇️ MODIFIE ICI : change label/titleHTML/sloganHTML/image pour
+           personnaliser chaque slide. Remplace les "picsum.photos" (API
+           d'images de démonstration) par tes propres photos, ex: "hero1.jpg".
+        ===================================================================== */
+        const heroFullSlides = [
+            {
+                label: "RL_STUDIORLK",
+                titleHTML: '<span class="rl-accent">RL</span> Studio',
+                sloganHTML: 'Une image qui <span>vous représente</span>',
+                image: "LOGO.png",
+                imageAlt: "RL Studio Logo"
+            },
+            {
+                label: "RL_STUDIORLK",
+                titleHTML: '<span class="rl-accent">Mariage</span> & Amour',
+                sloganHTML: 'Des souvenirs qui <span>durent toujours</span>',
+                image: "./Photo Mariage/RL 819-74.jpg",
+                imageAlt: "Photo mariage"
+            },
+            {
+                label: "RL_STUDIORLK",
+                titleHTML: '<span class="rl-accent">Portraits</span> & Studio',
+                sloganHTML: 'Chaque visage a <span>son histoire</span>',
+                image: "./Shooting Studio/RL819-18.jpg",
+                imageAlt: "Photo portrait studio"
+            },
+           
+            {
+                label: "RL_STUDIORLK",
+                titleHTML: '<span class="rl-accent">Voyages</span> & Culture',
+                sloganHTML: 'Explorer et <span>immortaliser</span>',
+                image: "./Photo Tourristique/RL819-47.jpg",
+                imageAlt: "Photo voyage"
+            }
+        ];
+
+        const heroCarouselOuter = document.getElementById('heroCarouselOuter');
+        const heroDotsContainer = document.getElementById('heroCarouselDots');
+        let heroCurrentIndex = 0;
+        let heroAutoplayTimer = null;
+
+        function renderHeroFullSlideMarkup(slide, i){
+            const activeClass = i === 0 ? ' active' : '';
+            return '<div class="hero-content' + activeClass + '">' +
+                        '<div class="hero-text">' +
+                            '<h4>' + slide.label + '</h4>' +
+                            '<h1>' + slide.titleHTML + '</h1>' +
+                            '<div class="hero-divider"></div>' +
+                            '<p class="hero-slogan">' + slide.sloganHTML + '</p>' +
+                            '<div class="hero-divider"></div>' +
+                            '<div class="social-icons">' +
+                                '<a href="https://www.instagram.com/rl_studiorlk/" target="_blank"><i class="fab fa-instagram"></i></a>' +
+                                '<a href="https://www.facebook.com/Rl819" target="_blank"><i class="fab fa-facebook-f"></i></a>' +
+                                '<a href="#"><i class="fab fa-youtube"></i></a>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="hero-image">' +
+                            '<div class="hero-image-wrapper">' +
+                                '<div class="hero-burst"></div>' +
+                                '<img src="' + slide.image + '" alt="' + (slide.imageAlt || '') + '">' +
+                                '<div class="hero-shine"></div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+        }
+
+        function buildHeroCarousel(){
+            heroCarouselOuter.innerHTML = heroFullSlides.map((slide, i) => renderHeroFullSlideMarkup(slide, i)).join('');
+
+            heroDotsContainer.innerHTML = heroFullSlides.map((_, i) =>
+                '<button class="' + (i === 0 ? 'active' : '') + '" data-index="' + i + '" aria-label="Aller à la slide ' + (i+1) + '"></button>'
+            ).join('');
+
+            heroDotsContainer.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    goToHeroSlide(parseInt(btn.dataset.index, 10));
+                    restartHeroAutoplay();
+                });
+            });
+        }
+
+        function goToHeroSlide(index){
+            const slides = heroCarouselOuter.querySelectorAll('.hero-content');
+            const dots = heroDotsContainer.querySelectorAll('button');
+            if (index === heroCurrentIndex) return;
+
+            const oldSlide = slides[heroCurrentIndex];
+            const newSlide = slides[index];
+
+            dots[heroCurrentIndex].classList.remove('active');
+            dots[index].classList.add('active');
+
+            /* La slide sortante joue son animation de sortie tout en restant visible */
+            oldSlide.classList.remove('entering');
+            oldSlide.classList.add('leaving');
+
+            /* La slide entrante devient active et joue son animation d'entrée
+               (fondu + zoom + flou + cascade du texte + flash + balayage) */
+            newSlide.classList.add('active', 'entering');
+
+            heroCurrentIndex = index;
+
+            /* Une fois l'animation de sortie terminée, on masque complètement l'ancienne slide */
+            setTimeout(() => {
+                oldSlide.classList.remove('active', 'leaving');
+            }, 550);
+
+            /* Une fois l'animation d'entrée terminée, on retire la classe pour permettre
+               qu'elle rejoue proprement la prochaine fois que cette slide reviendra */
+            setTimeout(() => {
+                newSlide.classList.remove('entering');
+            }, 1000);
+        }
+
+        function nextHeroSlide(){
+            const next = (heroCurrentIndex + 1) % heroFullSlides.length;
+            goToHeroSlide(next);
+        }
+
+        function startHeroAutoplay(){
+            /* Défilement automatique toutes les 3 secondes */
+            heroAutoplayTimer = setInterval(nextHeroSlide, 3000);
+        }
+
+        function restartHeroAutoplay(){
+            clearInterval(heroAutoplayTimer);
+            startHeroAutoplay();
+        }
+
+        buildHeroCarousel();
+
+        /* Joue l'animation d'entrée (flash, zoom, cascade texte) sur la toute
+           première slide dès le chargement de la page, pour un effet pro dès l'arrivée */
+        requestAnimationFrame(() => {
+            const firstSlide = heroCarouselOuter.querySelector('.hero-content');
+            if (firstSlide) {
+                firstSlide.classList.add('entering');
+                setTimeout(() => firstSlide.classList.remove('entering'), 1000);
+            }
+        });
+
+        startHeroAutoplay();
 
         /* ===== SCROLL REVEAL ===== */
         const observer = new IntersectionObserver((entries) => {

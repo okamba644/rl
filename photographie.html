@@ -22,7 +22,6 @@
         ul { list-style: none; }
         .container { max-width: 1600px; margin: 0 auto; padding: 0 40px; }
 
-        /* ===== ANIMATIONS ===== */
         .reveal { opacity: 0; transform: translateX(-60px); transition: opacity 0.7s ease, transform 0.7s ease; }
         .reveal.from-right { transform: translateX(60px); }
         .reveal.from-bottom { transform: translateY(40px); }
@@ -32,7 +31,6 @@
         .reveal.delay-3 { transition-delay: 0.3s; }
         .reveal.delay-4 { transition-delay: 0.4s; }
 
-        /* ===== NAVBAR ===== */
         nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--nav-bg); padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
         nav .container { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-weight: 700; font-size: 22px; display: flex; align-items: center; gap: 10px; z-index: 1100; position: relative; }
@@ -45,7 +43,6 @@
         .btn-follow { border: 1px solid var(--primary); padding: 8px 18px; border-radius: 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; transition: background 0.3s, color 0.3s; white-space: nowrap; }
         .btn-follow:hover { background: var(--primary); color: white; }
 
-        /* ===== HAMBURGER ===== */
         .mobile-close { position: absolute; top: 24px; right: 24px; width: 44px; height: 44px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; padding: 0; transition: background 0.3s, border-color 0.3s; }
         .mobile-close:hover { background: rgba(255,255,255,0.15); border-color: white; }
         .mobile-close span { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; position: absolute; }
@@ -82,84 +79,24 @@
         .mobile-social a { color: var(--text-gray); font-size: 20px; transition: color 0.3s; }
         .mobile-social a:hover { color: var(--accent); }
 
-        /* ===== PAGE HEADER ===== */
-        .page-header {
-            position: relative;
-            min-height: 100vh;
-            overflow: hidden;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-        }
+        .page-header { position: relative; min-height: 100vh; overflow: hidden; background: #000; display: flex; flex-direction: column; }
+        .page-header-img { position: absolute; top: 0; right: 0; width: 65%; height: 100%; object-fit: cover; object-position: center; z-index: 0; }
+        .page-header-fade { position: absolute; inset: 0; background: linear-gradient(90deg, #000 30%, rgba(0,0,0,0.6) 48%, rgba(0,0,0,0) 70%); z-index: 1; }
+        .page-header-content { position: relative; z-index: 2; padding: 160px 48px 80px; max-width: 700px; }
 
-        /* Image droite 65% — identique au React */
-        .page-header-img {
-            position: absolute;
-            top: 0; right: 0;
-            width: 65%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            z-index: 0;
-        }
-
-        /* Dégradé gauche — identique au React */
-        .page-header-fade {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, #000 30%, rgba(0,0,0,0.6) 48%, rgba(0,0,0,0) 70%);
-            z-index: 1;
-        }
-
-        /* Contenu hero */
-        .page-header-content {
-            position: relative;
-            z-index: 2;
-            padding: 160px 48px 80px;
-            max-width: 700px;
-        }
-
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 18px;
-            color: #d1d5db;
-            margin-bottom: 32px;
-        }
+        .breadcrumb { display: flex; align-items: center; gap: 12px; font-size: 18px; color: #d1d5db; margin-bottom: 32px; }
         .breadcrumb a { color: #d1d5db; transition: color 0.3s; }
         .breadcrumb a:hover { color: #fff; }
         .breadcrumb .sep { color: #6b7280; }
 
-        .page-header h1 {
-            font-size: 80px;
-            font-weight: 800;
-            line-height: 1.0;
-            letter-spacing: -2px;
-            margin-bottom: 0;
-        }
+        .page-header h1 { font-size: 80px; font-weight: 800; line-height: 1.0; letter-spacing: -2px; margin-bottom: 0; }
         .page-header h1 .rl-accent { color: var(--accent); }
+        .header-divider { width: 96px; height: 4px; background: var(--accent); border-radius: 999px; margin: 24px 0 32px; }
+        .page-sub { font-size: 20px; color: #d1d5db; max-width: 560px; line-height: 1.7; }
 
-        .header-divider {
-            width: 96px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 999px;
-            margin: 24px 0 32px;
-        }
-
-        .page-sub {
-            font-size: 20px;
-            color: #d1d5db;
-            max-width: 560px;
-            line-height: 1.7;
-        }
-
-        /* ===== LAYOUT ===== */
         .shop { padding: 30px 0 100px; }
         .photo-layout { display: grid; grid-template-columns: 300px 1fr; gap: 40px; align-items: start; }
 
-        /* ----- SIDEBAR ----- */
         .sidebar { position: sticky; top: 100px; }
         .sidebar-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #8a8a95; margin-bottom: 16px; padding-left: 4px; }
         .format-group { background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.09); border-radius: 14px; margin-bottom: 14px; overflow: hidden; }
@@ -178,7 +115,6 @@
         .sub-item.active { color: #ffffff; background: rgba(255,255,255,0.07); font-weight: 500; }
         .sub-item.active::before { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
 
-        /* ----- PRODUITS ----- */
         .product-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 26px; flex-wrap: wrap; gap: 10px; }
         .product-head h2 { font-size: 24px; color: #ffffff; }
         .product-head h2 span { color: var(--accent); font-weight: 400; }
@@ -187,12 +123,31 @@
         .product-card { background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; overflow: hidden; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; opacity: 0; transform: translateY(18px); }
         .product-card.show { opacity: 1; transform: translateY(0); transition: opacity 0.45s ease, transform 0.45s ease; }
         .product-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.22); box-shadow: 0 18px 44px rgba(0,0,0,0.5); }
-        .product-visual { height: 200px; position: relative; background: linear-gradient(135deg, #1b1b22 0%, #2a2a33 100%); overflow: hidden; }
-        .product-visual .fallback-icon { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 48px; color: rgba(255,255,255,0.78); z-index: 1; }
-        .product-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; transition: transform 0.4s; }
+
+        /* MODIFIÉ : la photo entière est visible (object-fit: contain), et au lieu d'un fond
+           neutre autour, on affiche la photo elle-même en version floutée/assombrie derrière —
+           la carte paraît ainsi entièrement "remplie" par la photo, sans bandes noires plates. */
+        .product-visual { height: 220px; position: relative; background: #050508; overflow: hidden; cursor: pointer; }
+        .product-visual .fallback-icon { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 48px; color: rgba(255,255,255,0.78); z-index: 0; }
+        .product-visual .visual-bg {
+            position: absolute;
+            top: -10%; left: -10%;
+            width: 120%; height: 120%;
+            object-fit: cover;
+            filter: blur(22px) brightness(0.5) saturate(1.25);
+            transform: scale(1.05);
+            z-index: 1;
+            transition: transform 0.5s ease;
+        }
+        .product-visual .visual-main { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; z-index: 2; transition: transform 0.4s; padding: 8px; }
         .product-visual img.img-failed { display: none; }
-        .product-card:hover .product-visual img { transform: scale(1.06); }
+        .product-card:hover .product-visual .visual-main { transform: scale(1.03); }
+        .product-card:hover .product-visual .visual-bg { transform: scale(1.12); }
         .product-badge { position: absolute; top: 12px; left: 12px; z-index: 3; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.16); color: #fff; padding: 4px 12px; border-radius: 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .zoom-hint { position: absolute; bottom: 10px; right: 10px; z-index: 3; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.2); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; opacity: 0; transition: opacity 0.25s; }
+        .product-card:hover .zoom-hint { opacity: 1; }
+
         .product-info { padding: 18px; display: flex; flex-direction: column; flex: 1; }
         .product-info h3 { font-size: 16px; margin-bottom: 8px; color: #ffffff; }
         .product-info p { font-size: 12.5px; color: #9a9aa5; line-height: 1.5; margin-bottom: 16px; flex: 1; }
@@ -202,7 +157,26 @@
         .btn-order { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.16); color: #ffffff; font-size: 12px; font-weight: 500; padding: 7px 15px; border-radius: 18px; transition: background 0.3s, border-color 0.3s, color 0.3s; cursor: pointer; }
         .btn-order:hover { background: var(--accent); border-color: var(--accent); color: #ffffff; }
 
-        /* ===== FOOTER ===== */
+        /* LIGHTBOX (pop-up photo en grand) */
+        .lightbox-overlay { position: fixed; inset: 0; background: rgba(5,5,8,0.94); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 30px; opacity: 0; transition: opacity 0.25s ease; }
+        .lightbox-overlay.open { display: flex; opacity: 1; }
+        .lightbox-content { position: relative; max-width: 92vw; max-height: 92vh; display: flex; align-items: center; justify-content: center; }
+        .lightbox-content img { max-width: 92vw; max-height: 92vh; width: auto; height: auto; object-fit: contain; border-radius: 10px; box-shadow: 0 25px 70px rgba(0,0,0,0.65); transform: scale(0.96); transition: transform 0.25s ease; }
+        .lightbox-overlay.open .lightbox-content img { transform: scale(1); }
+        .lightbox-close { position: fixed; top: 24px; right: 28px; width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-size: 22px; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.3s, border-color 0.3s; z-index: 5001; }
+        .lightbox-close:hover { background: var(--accent); border-color: var(--accent); }
+        .lightbox-nav { position: fixed; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.3s, border-color 0.3s; z-index: 5001; }
+        .lightbox-nav:hover { background: var(--accent); border-color: var(--accent); }
+        .lightbox-prev { left: 24px; }
+        .lightbox-next { right: 24px; }
+
+        @media (max-width: 600px) {
+            .lightbox-nav { width: 42px; height: 42px; font-size: 16px; }
+            .lightbox-prev { left: 10px; }
+            .lightbox-next { right: 10px; }
+            .lightbox-close { top: 16px; right: 16px; width: 40px; height: 40px; }
+        }
+
         footer { padding: 80px 0 30px; background: linear-gradient(to bottom, #0a0a0f, #1a0a2e); border-top: 1px solid rgba(255,255,255,0.05); }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 50px; margin-bottom: 60px; }
         .footer-logo-desc p { font-size: 13px; color: var(--text-gray); margin-top: 20px; max-width: 250px; line-height: 1.7; }
@@ -216,7 +190,6 @@
         .social-icons a:hover { color: var(--accent); }
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 28px; text-align: center; font-size: 12px; color: var(--text-gray); }
 
-        /* ===== RESPONSIVE TABLET ===== */
         @media (max-width: 900px) {
             .nav-links, .btn-follow { display: none; }
             .hamburger { display: flex; }
@@ -234,7 +207,6 @@
             .footer-logo-desc { grid-column: 1 / -1; }
         }
 
-        /* ===== RESPONSIVE MOBILE ===== */
         @media (max-width: 600px) {
             .page-header-content { padding: 120px 20px 50px; }
             .page-header h1 { font-size: 36px; letter-spacing: 0; }
@@ -249,7 +221,6 @@
 </head>
 <body>
 
-    <!-- ==================== NAVBAR ==================== -->
     <nav>
         <div class="container">
             <a href="index.html" class="logo"><div class="logo-box"><img src="LOGO.png" alt="RL Studio Logo"></div></a>
@@ -259,16 +230,14 @@
                 <li><a href="photographie.html" class="active">Photographie</a></li>
                 <li><a href="vidéographie.html">Vidéographie</a></li>
                 <li><a href="articles.html">Articles</a></li>
-           
                 <li><a href="a propos.html">À propos</a></li>
-                <li><a href="contacts.html">Contact</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
             </ul>
-            <a href="#" class="btn-follow"><i class="fab fa-instagram"></i> Nous suivre</a>
+            <a href="https://www.instagram.com/rl_studiorlk/" target="_blank" rel="noopener noreferrer" class="btn-follow"><i class="fab fa-instagram"></i> Nous suivre</a>
             <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
         </div>
     </nav>
 
-    <!-- ==================== MOBILE MENU ==================== -->
     <div class="mobile-menu" id="mobileMenu">
         <button class="mobile-close" id="mobileClose" aria-label="Fermer le menu"><span></span><span></span></button>
         <ul class="mobile-nav-links">
@@ -276,26 +245,23 @@
             <li><a href="imprimerie.html">Imprimerie</a></li>
             <li><a href="photographie.html" class="active">Photographie</a></li>
             <li><a href="vidéographie.html">Vidéographie</a></li>
-              <li><a href="articles.html">Articles</a></li>
+            <li><a href="articles.html">Articles</a></li>
             <li><a href="a propos.html">À propos</a></li>
-            <li><a href="contacts.html">Contact</a></li>
+            <li><a href="contacts.html">Contacts</a></li>
         </ul>
         <div class="mobile-follow"><a href="#"><i class="fab fa-instagram"></i> Nous suivre</a></div>
         <div class="mobile-social">
             <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
+           
+            
             <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
     </div>
 
-    <!-- ==================== PAGE HEADER ==================== -->
     <section class="page-header">
-        <!-- Image droite 65% ← remplace par ton image -->
         <img src="I1AW57CKB7-oTdLzqu-oQ.png" class="page-header-img" alt="Photographie">
-        <!-- Dégradé gauche -->
         <div class="page-header-fade"></div>
-        <!-- Contenu -->
         <div class="page-header-content">
             <div class="breadcrumb reveal">
                 <a href="index.html">Accueil</a>
@@ -312,7 +278,6 @@
         </div>
     </section>
 
-    <!-- ==================== SHOP ==================== -->
     <section class="shop">
         <div class="container">
             <div class="photo-layout">
@@ -331,7 +296,6 @@
         </div>
     </section>
 
-    <!-- ==================== FOOTER ==================== -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -347,26 +311,17 @@
                         <li><a href="index.html">Publications</a></li>
                         <li><a href="index.html#evenements">Événements</a></li>
                         <li><a href="apropos.html">À propos</a></li>
-                        <li><a href="contacts.html">Contact</a></li>
+                        <li><a href="contacts.html">Contacts</a></li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h4>Catégories</h4>
-                    <ul>
-                        <li><a href="photographie.html">Photographie</a></li>
-                        <li><a href="imprimerie.html">Imprimerie</a></li>
-                        <li><a href="#">Événements</a></li>
-                        <li><a href="#">Tutoriels</a></li>
-                        <li><a href="#">Actualités</a></li>
-                    </ul>
-                </div>
+                
                 <div class="footer-col">
                     <h4>Suivez-nous</h4>
                     <div class="social-icons" style="margin-bottom:22px;">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/rl_studiorlk/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/rlstudiorlk" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                     
+                        <a href="https://www.youtube.com/@RLStudioRLK" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
                     </div>
                     <div class="footer-contact">
                         <p><i class="fas fa-map-marker-alt"></i> Rabat, Maroc</p>
@@ -379,8 +334,16 @@
         </div>
     </footer>
 
+    <div class="lightbox-overlay" id="lightboxOverlay">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Photo précédente"><i class="fas fa-chevron-left"></i></button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Photo suivante"><i class="fas fa-chevron-right"></i></button>
+        <div class="lightbox-content">
+            <img src="" alt="" id="lightboxImg">
+        </div>
+    </div>
+
     <script>
-        /* ===== HAMBURGER ===== */
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileClose = document.getElementById('mobileClose');
@@ -390,70 +353,63 @@
         mobileClose.addEventListener('click', closeMenu);
         mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMenu));
 
-        /* ===== CATALOGUE PHOTO ===== */
+        const mariageGalleryPhotos = [
+            "IMG_0751.JPG","IMG_0823.JPG","IMG_0827.JPG","IMG_0828.JPG","IMG_0847.JPG","IMG_0888.JPG","IMG_0892.JPG",
+            "RL 819-10.jpg","RL 819-107.jpg","RL 819-108.jpg","RL 819-137.jpg","RL 819-38.jpg","RL 819-4.jpg","RL 819-74.jpg","RL 819-78.jpg","RL 819-97.jpg",
+            "RL819-208.jpg","RL819-243.jpg","RL819-275.jpg","RL819-322.jpg","RL819-324.jpg","RL819-362.jpg","RL819-373.jpg","RL819-438.jpg","RL819-54.jpg","RL819-57.jpg",
+            "RLSTUDIO_-39.jpg","RLSTUDIO_-41.jpg","RLSTUDIO_-73.jpg","RLSTUDIO_-94.jpg"
+        ];
+
+        const anniversaireGalleryPhotos = [
+            "IMG_2157.JPG","IMG_2185.JPG","IMG_2316.JPG","IMG_3653.JPG","IMG_3702.JPG","IMG_3704.JPG","IMG_3742.JPG","IMG_8872.jpg","IMG_8898.jpg",
+            "RL819-124.jpg","RL819-128.jpg","RL819-130.jpg","RL819-133.jpg","RL819-138.jpg","RL819-18.jpg","RL819-2.jpg","RL819-20.jpg","RL819-22.jpg",
+            "RL819-27.jpg","RL819-30.jpg","RL819-36.jpg","RL819-39.jpg","RL819-45.jpg","RL819-5.jpg","RL819-54.jpg","RL819-6.jpg","RL819-8.jpg","RL819-9.jpg","RL819-93.jpg"
+        ];
+
+        const soutenanceGalleryPhotos = [
+            "IMG_0882.jpg","IMG_0897.jpg","IMG_0899.jpg","IMG_0938.jpg","IMG_0943.jpg","IMG_0958.jpg","IMG_1008.jpg","IMG_1062.jpg","IMG_1128.jpg",
+            "RL819- (14).jpg","RL819- (27).jpg","RL819- (30).jpg","RL819- (48).jpg","RL819- (6).jpg","RL819- (62).jpg",
+            "RL819-108.jpg","RL819-110.jpg","RL819-22.jpg","RL819-46.jpg","RL819-47.jpg","RL819-53.jpg","RL819-78.jpg",
+            "RLSTUDIO_-120.jpg","RLSTUDIO_-144.jpg","RLSTUDIO_-3.jpg","RLSTUDIO_-63.jpg"
+        ];
+
+        const shootingStudioGalleryPhotos = [
+            "RL819-10.jpg","RL819-108.jpg","RL819-11.jpg","RL819-18.jpg","RL819-25.jpg","RL819-3.jpg","RL819-52.jpg","RL819-57.jpg","RL819-60.jpg","RL819-63.jpg",
+            "RL819-7.jpg","RL819-74.jpg","RL819.jpg","RLSTUDIO_-23.jpg","RLSTUDIO_-24.jpg","RLSTUDIO_-39.jpg","RLSTUDIO_-59.jpg"
+        ];
+
         const catalog = {
             evenements: {
                 label: "Événements", icon: "fa-calendar-check",
                 subs: {
-                    "mariage": { label: "Photo mariage", icon: "fa-heart", products: [
-                        { name: "Formule Essentiel Mariage", desc: "4h de couverture, remise de 200 photos retouchées en HD, galerie en ligne privée.", price: "1 500 DH", unit: "", seed: "wedding1" },
-                        { name: "Formule Prestige Mariage", desc: "Journée complète (8h), 400 photos HD, album photo 30×30 cm, galerie privée.", price: "2 800 DH", unit: "", seed: "wedding2" },
-                        { name: "Reportage cérémonie uniquement", desc: "Couverture de la cérémonie (2h), 100 photos sélectionnées et retouchées.", price: "900 DH", unit: "/ forfait", seed: "wedding3" }
-                    ]},
-                    "anniversaire": { label: "Photo anniversaire", icon: "fa-birthday-cake", products: [
-                        { name: "Anniversaire enfant", desc: "2h de reportage, 80 photos retouchées, ambiance festive et spontanée.", price: "600 DH", unit: "/ forfait", seed: "birthday1" },
-                        { name: "Anniversaire adulte / surprise", desc: "Reportage soirée 3h, 120 photos HD livrées sous 72h.", price: "900 DH", unit: "/ forfait", seed: "birthday2" },
-                        { name: "Anniversaire premium", desc: "Demi-journée, photobooth, 200 photos + diaporama souvenir.", price: "1 400 DH", unit: "/ forfait", seed: "birthday3" }
-                    ]}
+                    "mariage": { label: "Photo mariage", icon: "fa-heart", products: mariageGalleryPhotos.map((file) => ({ name: "", desc: "", price: "", unit: "", image: "Photo Mariage/" + file })) },
+                    "anniversaire": { label: "Photo anniversaire", icon: "fa-birthday-cake", products: anniversaireGalleryPhotos.map((file) => ({ name: "", desc: "", price: "", unit: "", image: "Photo Anniversaire/" + file })) }
                 }
             },
             academique: {
                 label: "Académique", icon: "fa-graduation-cap",
                 subs: {
-                    "soutenance": { label: "Shooting soutenance", icon: "fa-university", products: [
-                        { name: "Pack soutenance express", desc: "Séance d'1h avant / après soutenance, 30 photos retouchées livrées en 24h.", price: "350 DH", unit: "/ séance", seed: "soutenance1" },
-                        { name: "Reportage soutenance complet", desc: "Couverture de toute la soutenance + séance portrait, 80 photos HD.", price: "650 DH", unit: "/ forfait", seed: "soutenance2" },
-                        { name: "Pack famille soutenance", desc: "Séance famille après cérémonie, 50 photos retouchées, galerie partagée.", price: "500 DH", unit: "/ forfait", seed: "soutenance3" }
-                    ]},
-                    "remise-diplome": { label: "Remise de diplôme", icon: "fa-award", products: [
-                        { name: "Reportage cérémonie diplôme", desc: "Couverture de la remise officielle, 100 photos HD livrées en 48h.", price: "700 DH", unit: "/ forfait", seed: "diplome1" },
-                        { name: "Portrait diplômé", desc: "Séance portrait individuelle 45 min, toge & accessoires bienvenus, 20 photos.", price: "300 DH", unit: "/ séance", seed: "diplome2" },
-                        { name: "Pack promo entière", desc: "Couverture complète pour toute une promotion, tarif dégressif sur devis.", price: "Sur devis", unit: "", seed: "diplome3" }
-                    ]}
+                    "soutenance": { label: "Shooting soutenance", icon: "fa-university", products: soutenanceGalleryPhotos.map((file) => ({ name: "", desc: "", price: "", unit: "", image: "Photo soutenance/" + file })) }
                 }
             },
             portrait: {
                 label: "Portrait & Identité", icon: "fa-user-circle",
                 subs: {
-                    "shooting": { label: "Shooting photo", icon: "fa-camera", products: [
-                        { name: "Shooting mode / lifestyle", desc: "Séance 1h30 en studio ou extérieur, 40 photos retouchées.", price: "700 DH", unit: "/ séance", seed: "shooting1" },
-                        { name: "Shooting professionnel", desc: "Portrait corporate, LinkedIn, CV — 2h en studio, 30 photos HD.", price: "600 DH", unit: "/ séance", seed: "shooting2" },
-                        { name: "Shooting artistique", desc: "Concept créatif sur mesure, direction artistique incluse, 50 photos.", price: "1 000 DH", unit: "/ séance", seed: "shooting3" }
-                    ]},
-                    "identite": { label: "Photo identité", icon: "fa-id-badge", products: [
-                        { name: "Photo identité standard", desc: "Format officiel (35×45 mm), 6 tirages remis immédiatement.", price: "40 DH", unit: "/ série", seed: "id1" },
-                        { name: "Photo identité passeport / visa", desc: "Conforme aux normes internationales, fond blanc ou beige, 6 tirages.", price: "50 DH", unit: "/ série", seed: "id2" },
-                        { name: "Photo identité numérique HD", desc: "Fichier numérique haute résolution envoyé par e-mail sous 1h.", price: "30 DH", unit: "/ fichier", seed: "id3" }
-                    ]}
+                    "shooting": { label: "Shooting photo", icon: "fa-camera", products: shootingStudioGalleryPhotos.map((file) => ({ name: "", desc: "", price: "", unit: "", image: "Shooting Studio/" + file })) }
                 }
             },
             specialite: {
                 label: "Spécialités", icon: "fa-star",
                 subs: {
                     "touristique": { label: "Photo touristique", icon: "fa-map-marked-alt", products: [
-                        { name: "Séance souvenir au Maroc", desc: "Balade photo dans les médinas ou sites naturels, 30 photos retouchées, 1h.", price: "400 DH", unit: "/ séance", seed: "tourisme1" },
-                        { name: "Pack touriste 2h", desc: "Itinéraire personnalisé, 60 photos HD, galerie partagée en ligne.", price: "650 DH", unit: "/ séance", seed: "tourisme2" },
-                        { name: "Reportage voyage sur-mesure", desc: "Accompagnement lors de votre séjour, reportage complet, demi-journée.", price: "1 200 DH", unit: "/ demi-journée", seed: "tourisme3" }
-                    ]},
-                    "gastronomique": { label: "Photo gastronomique", icon: "fa-utensils", products: [
-                        { name: "Pack menu restaurant", desc: "Photo de 10 plats stylisés, livrée en 24h, fond neutre professionnel.", price: "800 DH", unit: "/ forfait", seed: "food1" },
-                        { name: "Shooting produits artisanaux", desc: "Mise en scène créative de vos produits, 20 photos HD retouchées.", price: "600 DH", unit: "/ forfait", seed: "food2" },
-                        { name: "Reportage en cuisine", desc: "Capturer le processus de préparation, ambiance authentique, 50 photos.", price: "1 000 DH", unit: "/ séance", seed: "food3" }
+                        { name: "Séance souvenir au Maroc", desc: "Balade photo dans les médinas ou sites naturels, 30 photos retouchées, 1h.", price: "400 DH", unit: "/ séance", image: "photos/tourisme1.jpg" },
+                        { name: "Pack touriste 2h", desc: "Itinéraire personnalisé, 60 photos HD, galerie partagée en ligne.", price: "650 DH", unit: "/ séance", image: "photos/tourisme2.jpg" },
+                        { name: "Reportage voyage sur-mesure", desc: "Accompagnement lors de votre séjour, reportage complet, demi-journée.", price: "1 200 DH", unit: "/ demi-journée", image: "photos/tourisme3.jpg" }
                     ]},
                     "culturel": { label: "Photo culturel", icon: "fa-landmark", products: [
-                        { name: "Reportage événement culturel", desc: "Concert, exposition, conférence — couverture complète, 150 photos HD.", price: "1 100 DH", unit: "/ forfait", seed: "culture1" },
-                        { name: "Séance patrimoine & architecture", desc: "Mise en valeur de lieux historiques ou culturels, 40 photos.", price: "700 DH", unit: "/ séance", seed: "culture2" },
-                        { name: "Documentaire photo", desc: "Projet photo narratif sur une thématique culturelle, sur-mesure.", price: "Sur devis", unit: "", seed: "culture3" }
+                        { name: "Reportage événement culturel", desc: "Concert, exposition, conférence — couverture complète, 150 photos HD.", price: "1 100 DH", unit: "/ forfait", image: "photos/culture1.jpg" },
+                        { name: "Séance patrimoine & architecture", desc: "Mise en valeur de lieux historiques ou culturels, 40 photos.", price: "700 DH", unit: "/ séance", image: "photos/culture2.jpg" },
+                        { name: "Documentaire photo", desc: "Projet photo narratif sur une thématique culturelle, sur-mesure.", price: "Sur devis", unit: "", image: "photos/culture3.jpg" }
                     ]}
                 }
             }
@@ -498,6 +454,9 @@
             });
         }
 
+        let currentGalleryImages = [];
+        let currentLightboxIndex = 0;
+
         function selectSub(gKey, sKey){
             const group = catalog[gKey];
             const sub = group.subs[sKey];
@@ -508,31 +467,40 @@
 
             rubriqueTitle.childNodes[0].nodeValue = group.label + " ";
             subTitle.textContent = "· " + sub.label;
-            productCount.textContent = sub.products.length + (sub.products.length > 1 ? " formules" : " formule");
+
+            const labelSingular = (gKey === "evenements" && sKey === "mariage") ? "photo" : "formule";
+            productCount.textContent = sub.products.length + (sub.products.length > 1 ? " " + labelSingular + "s" : " " + labelSingular);
+
+            currentGalleryImages = sub.products.map(p => p.image);
 
             let cards = "";
-            sub.products.forEach(p => {
-                const img = "https://picsum.photos/seed/" + p.seed + "/400/300";
-                const priceDisplay = p.unit
-                 
+            sub.products.forEach((p, idx) => {
+                const img = p.image;
+                const priceDisplay = p.unit;
+
                 cards +=
                 '<div class="product-card">' +
-                  '<div class="product-visual">' +
+                  '<div class="product-visual" data-index="' + idx + '">' +
                     '<i class="fas ' + sub.icon + ' fallback-icon"></i>' +
-                    '<img src="' + img + '" alt="' + p.name + '" onerror="this.classList.add(\'img-failed\')">' +
-                    '<span class="product-badge">' + sub.label + '</span>' +
+                    '<img class="visual-bg" src="' + img + '" alt="" aria-hidden="true">' +
+                    '<img class="visual-main" src="' + img + '" alt="" onerror="this.parentElement.querySelectorAll(\'img\').forEach(i=>i.classList.add(\'img-failed\'))">' +
+                    '<span class="zoom-hint"><i class="fas fa-expand"></i></span>' +
                   '</div>' +
                   '<div class="product-info">' +
-                    '<h3>' + p.name + '</h3>' +
-                    '<p>' + p.desc + '</p>' +
                     '<div class="product-footer">' +
-                      '<span class="product-price">' + priceDisplay + '</span>' +
                       '<a href="contacts.html" class="btn-order">Réserver</a>' +
                     '</div>' +
                   '</div>' +
                 '</div>';
             });
             productGrid.innerHTML = cards;
+
+            document.querySelectorAll('.product-visual').forEach(visual => {
+                visual.addEventListener('click', () => {
+                    const idx = parseInt(visual.dataset.index, 10);
+                    openLightbox(idx);
+                });
+            });
 
             requestAnimationFrame(() => {
                 document.querySelectorAll('.product-card').forEach((c, idx) => {
@@ -541,11 +509,56 @@
             });
         }
 
+        const lightboxOverlay = document.getElementById('lightboxOverlay');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxNext = document.getElementById('lightboxNext');
+
+        function openLightbox(index){
+            if(!currentGalleryImages.length) return;
+            currentLightboxIndex = index;
+            lightboxImg.src = currentGalleryImages[currentLightboxIndex];
+            lightboxOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(){
+            lightboxOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function showPrev(){
+            if(!currentGalleryImages.length) return;
+            currentLightboxIndex = (currentLightboxIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+            lightboxImg.src = currentGalleryImages[currentLightboxIndex];
+        }
+
+        function showNext(){
+            if(!currentGalleryImages.length) return;
+            currentLightboxIndex = (currentLightboxIndex + 1) % currentGalleryImages.length;
+            lightboxImg.src = currentGalleryImages[currentLightboxIndex];
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxPrev.addEventListener('click', showPrev);
+        lightboxNext.addEventListener('click', showNext);
+
+        lightboxOverlay.addEventListener('click', (e) => {
+            if(e.target === lightboxOverlay) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if(!lightboxOverlay.classList.contains('open')) return;
+            if(e.key === 'Escape') closeLightbox();
+            if(e.key === 'ArrowLeft') showPrev();
+            if(e.key === 'ArrowRight') showNext();
+        });
+
         buildSidebar();
         document.querySelector('.format-group[data-group="evenements"]').classList.add('open');
         selectSub('evenements', 'mariage');
 
-        /* ===== SCROLL REVEAL ===== */
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
