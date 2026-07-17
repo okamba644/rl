@@ -146,27 +146,7 @@
         .cat-item.active { color: #ffffff; background: rgba(255,255,255,0.07); font-weight: 500; }
         .cat-item.active::before { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
 
-        /* Filtres */
-        .filter-block { background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.09); border-radius: 14px; padding: 20px; margin-bottom: 14px; }
-        .filter-block-title { font-size: 14px; font-weight: 600; color: #f0f0f0; margin-bottom: 14px; }
-        .filter-label { font-size: 12px; color: #8a8a95; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-
-        .dots { display: flex; gap: 10px; margin-bottom: 18px; }
-        .dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; transition: border-color 0.2s, transform 0.2s; }
-        .dot:hover { transform: scale(1.15); border-color: white; }
-        .dot.selected { border-color: var(--accent); box-shadow: 0 0 8px var(--accent); }
-        .dot.purple { background: #6200d3; }
-        .dot.black { background: #111; }
-        .dot.white { background: #fff; }
-        .dot.gray { background: #a7a7ac; }
-
-        .size-list { display: flex; gap: 8px; flex-wrap: wrap; }
-        .size-btn { min-width: 38px; text-align: center; padding: 8px 10px; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; background: rgba(255,255,255,0.04); font-size: 12px; cursor: pointer; color: #ededed; font-family: 'Poppins', sans-serif; transition: border-color 0.2s, background 0.2s; }
-        .size-btn:hover { border-color: var(--primary); color: white; }
-        .size-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-        .btn-reset { margin-top: 14px; width: 100%; border: 0; color: white; font-weight: 700; padding: 14px; border-radius: 10px; background: linear-gradient(90deg, #5100dc, #f020d2); cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 13px; transition: opacity 0.3s; }
-        .btn-reset:hover { opacity: 0.85; }
+        
 
         /* ===== ZONE PRODUITS ===== */
         .product-area-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 14px; }
@@ -345,30 +325,6 @@
                             <li class="cat-item" data-filter="bag">Tote Bags</li>
                         </ul>
                     </div>
-
-                    <!-- Filtres -->
-                    <div class="filter-block">
-                        <div class="filter-block-title">Filtres</div>
-
-                        <div class="filter-label">Couleurs</div>
-                        <div class="dots">
-                            <span class="dot purple" title="Violet"></span>
-                            <span class="dot black" title="Noir"></span>
-                            <span class="dot white" title="Blanc"></span>
-                            <span class="dot gray" title="Gris"></span>
-                        </div>
-
-                        <div class="filter-label" style="margin-top:16px;">Tailles</div>
-                        <div class="size-list">
-                            <span class="size-btn">S</span>
-                            <span class="size-btn">M</span>
-                            <span class="size-btn">L</span>
-                            <span class="size-btn">XL</span>
-                            <span class="size-btn">XXL</span>
-                        </div>
-
-                        <button class="btn-reset">Réinitialiser &nbsp;<i class="fas fa-redo"></i></button>
-                    </div>
                 </aside>
 
                 <!-- PRODUITS -->
@@ -449,14 +405,14 @@
 
         /* ===== CATALOGUE ===== */
         const products = [
-            { badge: 'NOUVEAU',     img: 'https://cdn.screenshottocode.com/1zbC_v09O88-GdXEi-DIb.png', name: 'Polo RL_StudioRLK',      desc: 'Confort et élégance au quotidien.',         colors: ['purple','black','white','gray'], sizes: ['S','M','L','XL','XXL'], cat: 'polo' },
-            { badge: 'NOUVEAU',     img: 'https://cdn.screenshottocode.com/ujWzYT_8f8rXa93EAEU44.png', name: 'T-shirt RL_StudioRLK',   desc: "L'essentiel pour afficher votre style.",   colors: ['purple','black','white','gray'], sizes: ['S','M','L','XL','XXL'], cat: 'tshirt' },
-            { badge: 'BEST SELLER', img: 'https://cdn.screenshottocode.com/4OOKJD5eEKEpSfBnnZeZx.png', name: 'T-shirt Signature',      desc: 'Design signature RL_819.',                 colors: ['purple','black','white','gray'], sizes: ['S','M','L','XL','XXL'], cat: 'tshirt' },
-            { badge: '',            img: 'https://cdn.screenshottocode.com/3tUGpOuC0ox_IoHaLbXzz.png', name: 'Polo Premium',           desc: 'Qualité supérieure, finition soignée.',    colors: ['purple','black'],               sizes: ['S','M','L','XL','XXL'], cat: 'polo' },
-            { badge: 'NOUVEAU',     img: 'https://cdn.screenshottocode.com/vkraPphCqokv525aiQGMi.png', name: 'Sweat à capuche',        desc: 'Chaleur, style et identité.',              colors: ['purple','black','gray'],         sizes: ['S','M','L','XL','XXL'], cat: 'sweat' },
+            { badge: '',     img: 'polo rl.jpg', name: 'Polo RL_StudioRLK',      desc: 'Confort et élégance au quotidien.',         colors: ['purple','black','white','gray'], sizes: ['S','M','L','XL','XXL'], cat: 'polo' },
+            { badge: '',     img: 'polo_2 rl.jpg', name: 'T-shirt RL_StudioRLK',   desc: "L'essentiel pour afficher votre style.",   colors: ['purple','black','white','gray'], sizes: ['S','M','L','XL','XXL'], cat: 'tshirt' },
+          
+            { badge: '',            img: 'polo_3 rl.jpg', name: 'Polo Premium',           desc: 'Qualité supérieure, finition soignée.',    colors: ['purple','black'],               sizes: ['S','M','L','XL','XXL'], cat: 'polo' },
+            { badge: '',     img: 'polo_4 rl.jpg', name: 'Sweat à capuche',        desc: 'Chaleur, style et identité.',              colors: ['purple','black','gray'],         sizes: ['S','M','L','XL','XXL'], cat: 'sweat' },
             { badge: '',            img: 'https://cdn.screenshottocode.com/vEzcISqCvUUiM7Wg7l9Wj.png', name: 'Casquette RL_StudioRLK', desc: 'Accessoire indispensable.',                colors: ['purple','black'],               sizes: null,                     cat: 'casquette' },
-            { badge: '',            img: 'https://cdn.screenshottocode.com/NRMXdI1FBZRmVz2hzr3eM.png', name: 'Mug RL_819',             desc: 'Pour vos meilleures inspirations.',        colors: ['purple','black'],               sizes: null,                     cat: 'goodie' },
-            { badge: '',            img: 'https://cdn.screenshottocode.com/ZaysOBGLmzkBqYT-zZ362.png', name: 'Tote Bag RL_StudioRLK',  desc: 'Pratique, solide et design.',              colors: ['purple','black'],               sizes: null,                     cat: 'bag' }
+            { badge: '',            img: 'polo-5 rl.jpg', name: 'Mug RL_819',             desc: 'Pour vos meilleures inspirations.',        colors: ['purple','black'],               sizes: null,                     cat: 'goodie' },
+            { badge: '',            img: 'polo_6  rl.jpg', name: 'Tote Bag RL_StudioRLK',  desc: 'Pratique, solide et design.',              colors: ['purple','black'],               sizes: null,                     cat: 'bag' }
         ];
 
         let currentFilter = 'tous';
@@ -527,14 +483,18 @@
         });
 
         /* ===== RESET ===== */
-        document.querySelector('.btn-reset').addEventListener('click', () => {
-            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.dot').forEach(d => d.classList.remove('selected'));
-            document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
-            document.querySelector('.cat-item[data-filter="tous"]').classList.add('active');
-            currentFilter = 'tous';
-            renderProducts('tous');
-        });
+        const resetBtn = document.querySelector('.btn-reset');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.dot').forEach(d => d.classList.remove('selected'));
+                document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+                const allCat = document.querySelector('.cat-item[data-filter="tous"]');
+                if (allCat) allCat.classList.add('active');
+                currentFilter = 'tous';
+                renderProducts('tous');
+            });
+        }
 
         /* ===== SCROLL REVEAL ===== */
         const observer = new IntersectionObserver((entries) => {

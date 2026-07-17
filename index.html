@@ -338,10 +338,7 @@
             pointer-events: none;
         }
 
-        /* ===== CARROUSEL HERO COMPLET =====
-           Toutes les slides sont empilées dans la même cellule grid (technique de
-           superposition), ce qui permet à l'ensemble (texte + image) de garder sa
-           taille naturelle pendant que la transition se fait entre les slides. */
+        /* ===== CARROUSEL HERO COMPLET ===== */
         .hero-carousel-outer {
             display: grid;
             width: 100%;
@@ -357,7 +354,6 @@
             pointer-events: auto;
         }
 
-        /* Slide qui ENTRE : zoom avant + flou qui se dissipe, avec un léger rebond */
         .hero-carousel-outer .hero-content.entering {
             animation: heroContentIn 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
@@ -367,7 +363,6 @@
             100% { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
-        /* Slide qui SORT : recul + flou + fondu rapide, comme aspirée vers l'arrière */
         .hero-carousel-outer .hero-content.leaving {
             animation: heroContentOut 0.55s cubic-bezier(0.55, 0, 1, 0.45) forwards;
         }
@@ -376,7 +371,6 @@
             100% { opacity: 0; transform: scale(0.92); filter: blur(5px); }
         }
 
-        /* Cascade du texte : chaque ligne arrive avec son propre délai */
         .hero-content.entering .hero-text > * {
             opacity: 0;
             animation: heroTextIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -392,7 +386,6 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Titre : léger effet de "pop" sur l'entrée pour plus de punch */
         .hero-content.entering .hero-text h1 {
             animation-name: heroTitleIn;
         }
@@ -402,7 +395,6 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* Déclenchement du balayage lumineux et du flash à l'entrée de l'image */
         .hero-content.entering .hero-shine {
             animation: heroShineSweep 0.9s ease-out 0.15s forwards;
         }
@@ -427,7 +419,6 @@
             100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
 
-        /* Petits points indicateurs sous le bloc hero */
         .hero-carousel-dots {
             display: flex;
             gap: 8px;
@@ -559,13 +550,18 @@
 
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 28px; text-align: center; font-size: 12px; color: var(--text-gray); }
 
+        /* ===================================================== */
+        /*        RESPONSIVE — TABLETTE (largeur ≤ 900px)         */
+        /* ===================================================== */
         @media (max-width: 900px) {
+            /* --- Navigation --- */
             .nav-links, .btn-follow { display: none; }
             .hamburger { display: flex; }
             .mobile-menu { display: flex; }
 
             .container { padding: 0 28px; }
 
+            /* --- Hero : layout empilé, tout centré --- */
             .hero-content { flex-direction: column; text-align: center; gap: 50px; }
             .hero-text { max-width: 100%; }
             .hero-text h1 { font-size: 52px; }
@@ -576,6 +572,7 @@
             .hero-image-wrapper { width: 100%; max-width: 420px; height: 320px; }
             .hero-image-wrapper::before, .hero-image-wrapper::after { display: none; }
 
+            /* --- About --- */
             .about-content { flex-direction: column; gap: 60px; }
             .about-images { justify-content: center; min-height: 350px; }
             .main-about-img { width: 280px; height: 360px; }
@@ -585,6 +582,7 @@
             .about-text h2 { font-size: 32px; }
             .services { grid-template-columns: repeat(3,1fr); }
 
+            /* --- Articles / Events --- */
             .article-grid { grid-template-columns: repeat(2,1fr); }
             .article-img { height: 220px; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -593,11 +591,20 @@
             .slider-arrow { display: none; }
             .event-card { width: 100%; }
 
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 35px; }
+            /* --- Footer : 2 colonnes, logo pleine largeur en haut --- */
+            /* Icônes "Suivez-nous" et contact alignées à GAUCHE (jamais centrées) */
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
             .footer-logo-desc { grid-column: 1 / -1; }
+            .footer-col { text-align: left; }
+            .footer-col .social-icons { justify-content: flex-start; }
+            .footer-contact p { justify-content: flex-start; }
         }
 
+        /* ===================================================== */
+        /*        RESPONSIVE — MOBILE (largeur ≤ 600px)          */
+        /* ===================================================== */
         @media (max-width: 600px) {
+            /* --- Hero --- */
             .hero { padding-top: 110px; padding-bottom: 70px; }
             .container { padding: 0 20px; }
             .hero-text h1 { font-size: 40px; }
@@ -606,16 +613,22 @@
             .hero-text p { font-size: 14px; }
             .hero-image-wrapper { height: 260px; }
 
+            /* --- About : services en pile verticale (icône à gauche, texte à droite) --- */
             .about { padding: 70px 0 90px; }
             .about-content { gap: 50px; }
             .about-images { min-height: 300px; }
             .main-about-img { width: 230px; height: 300px; border-radius: 16px; }
             .overlay-about-img { width: 130px; height: 180px; right: 5px; border-width: 5px; border-radius: 14px; }
             .about-text h2 { font-size: 26px; }
-            .services { grid-template-columns: 1fr; gap: 20px; text-align: left; }
+            .about-text { text-align: left; }
+            .about-text > p { margin-left: 0; margin-right: 0; }
+            .services { grid-template-columns: 1fr; gap: 22px; text-align: left; }
             .service-item { display: flex; align-items: flex-start; gap: 15px; }
-            .service-item > div { flex: 1; }
+            .service-item .service-icon { flex-shrink: 0; margin-top: 4px; }
+            .service-item h5, .service-item p { margin: 0; }
+            .service-item h5 { margin-bottom: 4px; }
 
+            /* --- Articles / Events --- */
             .articles { padding: 70px 0; }
             .article-grid { grid-template-columns: 1fr; }
             .article-img { height: 240px; }
@@ -626,8 +639,20 @@
             .event-date-box .day { font-size: 18px; }
             .event-date-box .month { font-size: 12px; }
 
-            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            /* --- Footer : 1 colonne, TOUT aligné à gauche (icônes incluses) --- */
+            .footer-grid { grid-template-columns: 1fr; gap: 34px; }
             .footer-logo-desc { grid-column: 1; }
+            .footer-col { text-align: left; }
+            .footer-col h4 { margin-bottom: 16px; }
+            .footer-col .social-icons {
+                justify-content: flex-start; /* icônes Instagram/Facebook/YouTube collées à gauche */
+                gap: 22px;
+            }
+            .footer-contact p {
+                justify-content: flex-start;
+                text-align: left;
+            }
+            .footer-bottom { text-align: center; font-size: 11px; }
             footer { padding: 60px 0 25px; }
         }
     </style>
@@ -698,7 +723,7 @@
                  CARROUSEL HERO COMPLET — chaque slide = texte (label, titre, slogan)
                  + image, l'ensemble considéré comme UN SEUL bloc. Toutes les 3 secondes,
                  le bloc entier disparaît en fondu et un autre bloc complet le remplace.
-                 ⬇️ Modifie le tableau "heroFullSlides" dans le <script> plus bas pour
+                 Modifie le tableau "heroFullSlides" dans le script plus bas pour
                  changer les textes et les chemins d'images de chaque slide.
             ===================================================================== -->
             <div class="hero-carousel-outer" id="heroCarouselOuter"></div>
@@ -718,31 +743,34 @@
                         <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
                         <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
                     </div>
-                    <img src="PASTEUR CHANTAL.jpg" alt="Studio work" class="main-about-img">
-                    <img src="rL.jpg" alt="Camera lens" class="overlay-about-img">
+                    <img src="./Shooting Studio/RLSTUDIO_-59.jpg" alt="Studio work" class="main-about-img">
+                    <img src="./Shooting Studio/RL819-63.jpg" alt="Camera lens" class="overlay-about-img">
                 </div>
                 <div class="about-text">
                     <h4 class="reveal delay-2">RL_STUDIORLK</h4>
                     <h2 class="reveal delay-3">L'art de voir, <br>le talent de <span>capturer.</span></h2>
-                    <p class="reveal delay-4">RL_StudioRLK est un espace créatif dédié à la photographie, à la mise en valeur d'articles et à la couverture d'événements. Chaque image raconte une histoire, chaque projet est une nouvelle aventure.</p>
+                    <p class="reveal delay-4">RL_StudioRLK est un espace créatif dédié à la photographie, à la vidéographie et à l'imprimerie. Chaque image raconte une histoire, chaque projet est une nouvelle aventure.</p>
                     <div class="services">
+                        <!-- Service 1 : Photographie -->
                         <div class="service-item reveal delay-3">
                             <i class="fas fa-camera service-icon"></i>
                             <h5>Photographie</h5>
-                            <p>Des clichés qui racontent vos plus belles histoires.</p>
+                            <p>Des clichés qui racontent vos plus belles histoires avec émotion et style.</p>
                         </div>
+                        <!-- Service 2 : Vidéographie -->
                         <div class="service-item reveal delay-4">
-                            <i class="far fa-gem service-icon"></i>
-                            <h5>Création</h5>
-                            <p>Mise en valeur artistique d'articles et de projets.</p>
+                            <i class="fas fa-video service-icon"></i>
+                            <h5>Vidéographie</h5>
+                            <p>Des vidéos professionnelles qui donnent vie à vos moments et projets.</p>
                         </div>
+                        <!-- Service 3 : Imprimerie -->
                         <div class="service-item reveal delay-5">
-                            <i class="far fa-calendar-alt service-icon"></i>
-                            <h5>Événements</h5>
-                            <p>Couverture professionnelle de vos événements.</p>
+                            <i class="fas fa-print service-icon"></i>
+                            <h5>Imprimerie</h5>
+                            <p>De la carte de visite au grand format : impressions soignées et durables.</p>
                         </div>
                     </div>
-                    <a href="#" class="btn-primary reveal delay-5">En savoir plus &rarr;</a>
+                    <a href="a propos.html" class="btn-primary reveal delay-5">En savoir plus &rarr;</a>
                 </div>
             </div>
         </div>
@@ -756,7 +784,7 @@
                     <h4>ARTICLES À LA UNE</h4>
                     <h2>Découvrez nos dernières <span>prises</span></h2>
                 </div>
-                <a href="#" class="btn-link reveal from-right delay-2">Voir tous les articles &rarr;</a>
+               
             </div>
             <div class="article-grid">
                 <div class="article-card reveal delay-1">
@@ -846,7 +874,7 @@
                     </div>
                 </div>
 
-                
+
 
                 <div class="slider-arrow reveal from-right delay-5" style="background:rgba(255,255,255,0.08);"><i class="fas fa-chevron-right"></i></div>
             </div>
@@ -859,7 +887,7 @@
             <div class="footer-grid">
                 <div class="footer-logo-desc reveal delay-1">
                     <div class="logo"><div class="logo-box"><img src="LOGO.png" alt="RL Studio Logo"></div></div>
-                    <p>RL_StudioRLK - Capturez l'instant, partagez l'émotion.</p>
+                    <p>RL_StudioRLK, Capturez l'instant, partagez l'émotion.</p>
                 </div>
                 <div class="footer-col reveal delay-2">
                     <h4>Navigation</h4>
@@ -921,11 +949,9 @@
         /* =====================================================================
            CARROUSEL HERO COMPLET
            -----------------------------------------------------------------
-           Chaque objet ci-dessous = UNE slide entière (label + titre + slogan
-           + image). Le tout apparaît/disparaît ensemble, comme un seul bloc.
-           ⬇️ MODIFIE ICI : change label/titleHTML/sloganHTML/image pour
-           personnaliser chaque slide. Remplace les "picsum.photos" (API
-           d'images de démonstration) par tes propres photos, ex: "hero1.jpg".
+           Chaque objet = UNE slide entière (label + titre + slogan + image).
+           Le tout apparaît/disparaît ensemble, comme un seul bloc.
+           Modifie label/titleHTML/sloganHTML/image pour personnaliser chaque slide.
         ===================================================================== */
         const heroFullSlides = [
             {
@@ -949,7 +975,6 @@
                 image: "./Shooting Studio/RL819-18.jpg",
                 imageAlt: "Photo portrait studio"
             },
-           
             {
                 label: "RL_STUDIORLK",
                 titleHTML: '<span class="rl-accent">Voyages</span> & Culture',
@@ -1015,23 +1040,17 @@
             dots[heroCurrentIndex].classList.remove('active');
             dots[index].classList.add('active');
 
-            /* La slide sortante joue son animation de sortie tout en restant visible */
             oldSlide.classList.remove('entering');
             oldSlide.classList.add('leaving');
 
-            /* La slide entrante devient active et joue son animation d'entrée
-               (fondu + zoom + flou + cascade du texte + flash + balayage) */
             newSlide.classList.add('active', 'entering');
 
             heroCurrentIndex = index;
 
-            /* Une fois l'animation de sortie terminée, on masque complètement l'ancienne slide */
             setTimeout(() => {
                 oldSlide.classList.remove('active', 'leaving');
             }, 550);
 
-            /* Une fois l'animation d'entrée terminée, on retire la classe pour permettre
-               qu'elle rejoue proprement la prochaine fois que cette slide reviendra */
             setTimeout(() => {
                 newSlide.classList.remove('entering');
             }, 1000);
@@ -1043,7 +1062,6 @@
         }
 
         function startHeroAutoplay(){
-            /* Défilement automatique toutes les 3 secondes */
             heroAutoplayTimer = setInterval(nextHeroSlide, 3000);
         }
 
@@ -1054,8 +1072,6 @@
 
         buildHeroCarousel();
 
-        /* Joue l'animation d'entrée (flash, zoom, cascade texte) sur la toute
-           première slide dès le chargement de la page, pour un effet pro dès l'arrivée */
         requestAnimationFrame(() => {
             const firstSlide = heroCarouselOuter.querySelector('.hero-content');
             if (firstSlide) {
